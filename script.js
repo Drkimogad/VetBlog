@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Generate blogs dynamically
     const blogList = document.getElementById("blog-list");
-    const savedVisibleBlogs = JSON.parse(localStorage.getItem("visibleBlogs")) || 1;
+    const savedVisibleBlogs = parseInt(localStorage.getItem("visibleBlogs"), 10) || 1;
 
     for (let i = 1; i <= 100; i++) {
         const blogPost = document.createElement("div");
@@ -48,11 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
     blogList.appendChild(postBlogButton);
 
     postBlogButton.addEventListener("click", () => {
-        const nextVisibleBlogIndex = document.querySelectorAll(".blog-post[style='display: block;']").length + 1;
-        const nextBlogPost = document.querySelector(`.blog-post[data-index="${nextVisibleBlogIndex}"]`);
+        const visibleBlogs = document.querySelectorAll(".blog-post[style='display: block;']").length;
+        const nextBlogPost = document.querySelector(`.blog-post[data-index="${visibleBlogs + 1}"]`);
         if (nextBlogPost) {
             nextBlogPost.style.display = "block";
-            localStorage.setItem("visibleBlogs", nextVisibleBlogIndex);
+            localStorage.setItem("visibleBlogs", visibleBlogs + 1);
         } else {
             alert("All blogs have been posted!");
         }
@@ -71,4 +71,17 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const newLink = prompt("Enter your TikTok profile link:", tiktokLink.href);
         if (newLink) {
-        
+            tiktokLink.href = newLink;
+            localStorage.setItem("tiktok-link", newLink);
+        }
+    });
+
+    wordpressLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        const newLink = prompt("Enter your WordPress profile link:", wordpressLink.href);
+        if (newLink) {
+            wordpressLink.href = newLink;
+            localStorage.setItem("wordpress-link", newLink);
+        }
+    });
+});
