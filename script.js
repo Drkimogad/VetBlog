@@ -30,12 +30,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Generate blogs dynamically
     const blogList = document.getElementById("blog-list");
+    const savedVisibleBlogs = JSON.parse(localStorage.getItem("visibleBlogs")) || 1;
+
     for (let i = 1; i <= 100; i++) {
         const blogPost = document.createElement("div");
         blogPost.className = "blog-post";
         blogPost.innerHTML = `<h3>Blog Post ${i}</h3><p>This is the content for blog post ${i}.</p>`;
+        blogPost.style.display = i <= savedVisibleBlogs ? "block" : "none"; // Show only visible blogs
+        blogPost.dataset.index = i;
         blogList.appendChild(blogPost);
     }
+
+    // Add a button to post new blogs
+    const postBlogButton = document.createElement("button");
+    postBlogButton.textContent = "Post Next Blog";
+    postBlogButton.style.marginTop = "20px";
+    blogList.appendChild(postBlogButton);
+
+    postBlogButton.addEventListener("click", () => {
+        const nextVisibleBlogIndex = document.querySelectorAll(".blog-post[style='display: block;']").length + 1;
+        const nextBlogPost = document.querySelector(`.blog-post[data-index="${nextVisibleBlogIndex}"]`);
+        if (nextBlogPost) {
+            nextBlogPost.style.display = "block";
+            localStorage.setItem("visibleBlogs", nextVisibleBlogIndex);
+        } else {
+            alert("All blogs have been posted!");
+        }
+    });
 
     // Social media links
     const tiktokLink = document.getElementById("tiktok-link");
@@ -50,17 +71,4 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const newLink = prompt("Enter your TikTok profile link:", tiktokLink.href);
         if (newLink) {
-            tiktokLink.href = newLink;
-            localStorage.setItem("tiktok-link", newLink);
-        }
-    });
-
-    wordpressLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        const newLink = prompt("Enter your WordPress profile link:", wordpressLink.href);
-        if (newLink) {
-            wordpressLink.href = newLink;
-            localStorage.setItem("wordpress-link", newLink);
-        }
-    });
-});
+        
