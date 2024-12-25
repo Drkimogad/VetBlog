@@ -3,42 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetBlog</title>
+    <title>My Blog</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div id="hero" class="hero-image">
-            <h1 id="hero-title">Welcome to My Blog</h1>
-            <button id="edit-hero-btn">Edit Hero</button>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#blogs">Blogs</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <h1 id="hero-title">Welcome to My Blog</h1>
+        <input type="file" id="hero-upload" accept="image/*" style="margin-top: 10px;">
+        <img id="hero-banner" alt="Hero Banner" style="width: 100%; max-height: 300px; display: none;">
     </header>
     <main>
-        <section id="about">
-            <h2>About Us</h2>
-            <p id="about-text">This is a customizable section about you or your blog. Edit this text to tell visitors more about yourself.</p>
-            <button id="edit-about-btn">Edit About Us</button>
-        </section>
-        <section id="blogs">
-            <h2>Blogs</h2>
-            <div id="blog-list">
-                <!-- Blog posts will be dynamically populated here -->
-            </div>
-        </section>
+        <div id="blog-list"></div>
     </main>
     <footer>
-        <div class="social-icons">
-            <a href="#" id="tiktok-link" target="_blank">TikTok</a>
-            <a href="#" id="wordpress-link" target="_blank">WordPress</a>
+        <div class="footer-content">
+            <p>&copy; 2024 My Blog. All rights reserved.</p>
+            <p>Your go-to resource for small animal care, preventive tips, and more.</p>
+            <div class="footer-links">
+                <a href="#" id="footer-tiktok">TikTok</a>
+                <a href="#" id="footer-wordpress">WordPress</a>
+            </div>
         </div>
-        <p>&copy; 2024 VetBlog. All rights reserved.</p>
     </footer>
     <script src="script.js"></script>
 </body>
