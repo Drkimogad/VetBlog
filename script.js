@@ -20,17 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (file) reader.readAsDataURL(file);
     });
 
-    // Editable About Us section
+    // About Us contenteditable save
     const aboutUsText = document.getElementById("about-us-text");
-    const saveAboutUsBtn = document.getElementById("save-about-us");
     const savedAboutUs = localStorage.getItem("about-us");
 
     if (savedAboutUs) {
-        aboutUsText.value = savedAboutUs;
+        aboutUsText.textContent = savedAboutUs;
     }
 
-    saveAboutUsBtn.addEventListener("click", () => {
-        localStorage.setItem("about-us", aboutUsText.value);
-        alert("About Us content saved!");
+    aboutUsText.addEventListener("input", () => {
+        localStorage.setItem("about-us", aboutUsText.textContent);
     });
 });
