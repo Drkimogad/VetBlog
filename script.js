@@ -35,4 +35,20 @@ document.addEventListener("DOMContentLoaded", () => {
     aboutUsText.addEventListener("input", () => {
         localStorage.setItem("about-us", aboutUsText.textContent);
     });
+
+    // Blog posts functionality
+    const blogList = document.getElementById("blog-list");
+
+    const posts = [
+        { title: "First Post", content: "This is the content of the first post." },
+        { title: "Second Post", content: "This is the content of the second post." },
+        { title: "Third Post", content: "This is the content of the third post." }
+    ];
+
+    posts.forEach(post => {
+        const postElement = document.createElement("div");
+        postElement.className = "blog-post";
+        postElement.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p>`;
+        blogList.appendChild(postElement);
+    });
 });
