@@ -46,11 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
         postElement.innerHTML = `
             <h2>New Blog Post</h2>
             <textarea class="blog-content">This is a new blog post.</textarea>
+            <button class="publish-btn">Publish</button>
             <div class="blog-actions">
                 <button class="like-btn">Like</button>
                 <button class="share-btn">Share</button>
             </div>
         `;
         blogList.appendChild(postElement);
+    });
+
+    // Publish button functionality
+    blogList.addEventListener("click", (event) => {
+        if (event.target.classList.contains("publish-btn")) {
+            const blogContent = event.target.previousElementSibling.value;
+            console.log("Published blog content:", blogContent);
+            // Additional publish logic can be added here
+        }
     });
 });
