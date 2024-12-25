@@ -38,17 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Blog posts functionality
     const blogList = document.getElementById("blog-list");
+    const addBlogBtn = document.getElementById("add-blog-btn");
 
-    const posts = [
-        { title: "First Post", content: "This is the content of the first post." },
-        { title: "Second Post", content: "This is the content of the second post." },
-        { title: "Third Post", content: "This is the content of the third post." }
-    ];
-
-    posts.forEach(post => {
+    addBlogBtn.addEventListener("click", () => {
         const postElement = document.createElement("div");
         postElement.className = "blog-post";
-        postElement.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p>`;
+        postElement.innerHTML = `
+            <h2>New Blog Post</h2>
+            <textarea class="blog-content">This is a new blog post.</textarea>
+            <div class="blog-actions">
+                <button class="like-btn">Like</button>
+                <button class="share-btn">Share</button>
+            </div>
+        `;
         blogList.appendChild(postElement);
     });
 });
