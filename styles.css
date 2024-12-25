@@ -1,3 +1,4 @@
+/* Global styling */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -6,6 +7,7 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Header Styling */
 header {
     background: #35424a;
     color: #ffffff;
@@ -15,17 +17,22 @@ header {
 
 #hero-upload {
     margin-top: 10px;
+    padding: 10px;
 }
 
 #hero-banner {
-    margin-top: 10px;
+    margin-top: 20px;
     display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
+/* About Us Section */
 #about-us {
     background: #ffffff;
     margin: 20px auto;
-    padding: 15px;
+    padding: 20px;
     text-align: center;
     max-width: 800px;
     border-radius: 5px;
@@ -36,11 +43,15 @@ header {
     display: block;
     font-size: 16px;
     color: #333;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    min-height: 100px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* Links Section */
 .links {
     text-align: center;
     margin: 20px 0;
@@ -48,15 +59,42 @@ header {
 
 .links a {
     margin: 0 15px;
+    transition: transform 0.3s ease;
+}
+
+.links a:hover {
+    transform: scale(1.1);
 }
 
 .links img {
     vertical-align: middle;
 }
 
+/* Footer Styling */
 footer {
     background: #35424a;
     color: #ffffff;
     text-align: center;
     padding: 15px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    #about-us {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    #about-us-text {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .links {
+        margin: 15px 0;
+    }
 }
