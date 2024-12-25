@@ -4,18 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const heroBanner = document.getElementById("hero-banner");
     const savedBanner = localStorage.getItem("hero-banner");
 
+    // Display saved hero banner if exists
     if (savedBanner) {
         heroBanner.src = savedBanner;
         heroBanner.style.display = "block";
     }
 
+    // Update hero banner when file is uploaded
     heroUpload.addEventListener("change", (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
         reader.onload = (e) => {
             heroBanner.src = e.target.result;
             heroBanner.style.display = "block";
-            localStorage.setItem("hero-banner", e.target.result);
+            localStorage.setItem("hero-banner", e.target.result); // Save the banner to localStorage
         };
         if (file) reader.readAsDataURL(file);
     });
@@ -24,10 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const aboutUsText = document.getElementById("about-us-text");
     const savedAboutUs = localStorage.getItem("about-us");
 
+    // Load saved About Us text if exists
     if (savedAboutUs) {
         aboutUsText.textContent = savedAboutUs;
     }
 
+    // Save About Us content on input change
     aboutUsText.addEventListener("input", () => {
         localStorage.setItem("about-us", aboutUsText.textContent);
     });
