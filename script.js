@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Display saved hero banner if exists
     if (savedBanner) {
         heroBanner.src = savedBanner;
-        heroBanner.style.display = "block";
+        heroBanner.style.display = "block";  // Ensure the image is shown
     }
 
     // Update hero banner when file is uploaded
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             heroBanner.src = e.target.result;
-            heroBanner.style.display = "block";
+            heroBanner.style.display = "block";  // Ensure the image is shown
             localStorage.setItem("hero-banner", e.target.result); // Save the banner to localStorage
         };
         if (file) reader.readAsDataURL(file);
@@ -61,19 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const blogContent = event.target.previousElementSibling.value;
             console.log("Published blog content:", blogContent);
             // Additional publish logic can be added here
-        }
-    });
-
-    // Toggle visibility for blog posts
-    const blogPosts = document.querySelectorAll(".blog-post");
-    blogPosts.forEach((post, index) => {
-        if (index !== 0) post.style.display = "none"; // Hide all except the first one
-    });
-
-    blogList.addEventListener("click", (event) => {
-        if (event.target.classList.contains("publish-btn")) {
-            const blogPost = event.target.closest(".blog-post");
-            blogPost.style.display = "block"; // Show the published post
         }
     });
 });
