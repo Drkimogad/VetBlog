@@ -1,71 +1,98 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Hero banner functionality
-    const heroUpload = document.getElementById("hero-upload");
-    const heroBanner = document.getElementById("hero-banner");
-    const savedBanner = localStorage.getItem("hero-banner");
+    const publishBtn = document.getElementById("publish-btn");
+    const toggleNextBtn = document.getElementById("toggle-next-btn");
+    const blogTextarea = document.getElementById("blog-textarea");
+    const blogImageUpload = document.getElementById("blog-image-upload");
+    const publishedBlogs = document.getElementById("published-blogs");
 
-    if (savedBanner) {
-        heroBanner.src = savedBanner;
-        heroBanner.style.display = "block";
-    }
+    let blogs = [];
+    let currentBlogIndex = 0;
 
-    heroUpload.addEventListener("change", (event) => {
-        const file = event.target.files[0];
+    // Publish Blog Functionality
+    publishBtn.addEventListener("click", () => {
+        const content = blogTextarea.value.trim();
+        const imageFile = blogImageUpload.files[0];
+
+        if (content === "") {
+            alert("Blog content cannot be empty!");
+            return;
+        }
+
         const reader = new FileReader();
         reader.onload = (e) => {
-            heroBanner.src = e.target.result;
-            heroBanner.style.display = "block";
-            localStorage.setItem("hero-banner", e.target.result); 
+            const blog = {
+                content,
+                image: e.target.result || null,
+            };
+            blogs.push(blog);
+            displayBlog(blog);
+            blogTextarea.value = "";
+            blogImageUpload.value = "";
         };
-        if (file) reader.readAsDataURL(file);
+
+        if (imageFile) {
+            reader.readAsDataURL(imageFile);
+        } else {
+            const blog = { content, image: null };
+            blogs.push(blog);
+            displayBlog(blog);
+            blogTextarea.value = "";
+        }
     });
 
-    // About Us contenteditable save
-    const aboutUsText = document.getElementById("about-us-text");
-    const savedAboutUs = localStorage.getItem("about-us");
+    // Display Blog
+    const displayBlog = (blog) => {
+        const blogPost = document.createElement("div");
+        blogPost.className = "blog-post";
 
-    if (savedAboutUs) {
-        aboutUsText.textContent = savedAboutUs;
-    }
+        const content = document.createElement("p");
+        content.textContent = blog.content;
 
-    aboutUsText.addEventListener("input", () => {
-        localStorage.setItem("about-us", aboutUsText.textContent);
-    });
+        const image = document.createElement("img");
+        if (blog.image) {
+            image.src = blog.image;
+            image.style.maxWidth = "100%";
+            image.style.height = "auto";
+        }
 
-    // Blog functionality
-    const blogList = document.getElementById("blog-list");
-    const addBlogBtn = document.getElementById("add-blog-btn");
-    const newBlogContent = document.getElementById("new-blog-content");
+        const actions = document.createElement("div");
+        actions.className = "blog-actions";
 
-    addBlogBtn.addEventListener("click", () => {
-        const blogPostContent = newBlogContent.value;
-        if (!blogPostContent.trim()) return; // Prevent empty blog posts
-        const postElement = document.createElement("div");
-        postElement.className = "blog-post";
-        postElement.innerHTML = `
-            <p>${blogPostContent}</p>
-            <div class="blog-actions">
-                <button class="like-btn">Like</button>
-                <button class="share-btn">Share</button>
-                <button class="delete-btn">Delete</button>
-            </div>
-        `;
-        blogList.appendChild(postElement);
-        newBlogContent.value = ""; // Clear the text area after adding the blog
+        const likeBtn = document.createElement("button");
+        likeBtn.textContent = "Like";
+        likeBtn.className = "like-btn";
+        actions.appendChild(likeBtn);
 
-        // Handle like button click
-        postElement.querySelector(".like-btn").addEventListener("click", () => {
-            alert("You liked this post!");
+        const shareBtn = document.createElement("button");
+        shareBtn.textContent = "Share";
+        shareBtn.className = "share-btn";
+        actions.appendChild(shareBtn);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.className = "delete-btn";
+        deleteBtn.addEventListener("click", () => {
+            publishedBlogs.removeChild(blogPost);
         });
+        actions.appendChild(deleteBtn);
 
-        // Handle share button click
-        postElement.querySelector(".share-btn").addEventListener("click", () => {
-            alert("Post shared!");
-        });
+        blogPost.appendChild(content);
+        if (blog.image) blogPost.appendChild(image);
+        blogPost.appendChild(actions);
 
-        // Handle delete button click
-        postElement.querySelector(".delete-btn").addEventListener("click", () => {
-            blogList.removeChild(postElement);
-        });
+        publishedBlogs.appendChild(blogPost);
+    };
+
+    // Toggle to Next Blog
+    toggleNextBtn.addEventListener("click", () => {
+        if (blogs.length === 0) {
+            alert("No blogs available!");
+            return;
+        }
+
+        currentBlogIndex = (currentBlogIndex + 1) % blogs.length;
+        const blog = blogs[currentBlogIndex];
+        publishedBlogs.innerHTML = "";
+        displayBlog(blog);
     });
 });
