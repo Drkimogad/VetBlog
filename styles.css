@@ -61,6 +61,10 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.blog-post:not(:first-child) {
+    display: none; /* Hide all blog posts except the first one */
+}
+
 .blog-content {
     width: 100%;
     height: 100px;
@@ -119,8 +123,6 @@ header {
 
 .links img {
     vertical-align: middle;
-    width: 30px;
-    height: 30px;
 }
 
 /* Footer Styling */
