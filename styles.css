@@ -13,8 +13,33 @@ header {
     padding: 1em 0;
 }
 
+.hero-banner {
+    padding: 50px 20px;
+    background-image: url('banner-image.jpg'); /* You can replace this with your desired background image */
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
 main {
     padding: 20px;
+}
+
+#about-us {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#about-textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
 }
 
 #blogpost {
@@ -86,7 +111,4 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
 }
