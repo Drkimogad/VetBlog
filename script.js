@@ -3,13 +3,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleNextBtn = document.getElementById("toggle-next-btn");
     const blogTextarea = document.getElementById("blog-textarea");
     const blogImageUpload = document.getElementById("blog-image-upload");
+    const imagePreview = document.getElementById("image-preview");
     const publishedBlogs = document.getElementById("published-blogs");
-    const saveAboutBtn = document.getElementById("save-about-btn");
-    const aboutTextarea = document.getElementById("about-textarea");
-    const aboutContent = document.getElementById("about-content");
 
     let blogs = [];
     let currentBlogIndex = 0;
+
+    // Preview Image Functionality
+    blogImageUpload.addEventListener("change", () => {
+        const file = blogImageUpload.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = "none";
+        }
+    });
 
     // Publish Blog Functionality
     publishBtn.addEventListener("click", () => {
@@ -31,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             displayBlog(blog);
             blogTextarea.value = "";
             blogImageUpload.value = "";
+            imagePreview.style.display = "none";
         };
 
         if (imageFile) {
@@ -41,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             displayBlog(blog);
             blogTextarea.value = "";
             blogImageUpload.value = "";
+            imagePreview.style.display = "none";
         }
     });
 
@@ -76,8 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteBtn.textContent = "Delete";
         deleteBtn.className = "delete-btn";
         deleteBtn.addEventListener("click", () => {
-            publishedBlogs.removeChild(blogPost);
-            blogs = blogs.filter(b => b !== blog);
+            if (confirm("Are you sure you want to delete this blog post?")) {
+                publishedBlogs.removeChild(blogPost);
+                blogs = blogs.filter(b => b !== blog);
+            }
         });
         actions.appendChild(deleteBtn);
 
@@ -99,16 +116,5 @@ document.addEventListener("DOMContentLoaded", () => {
         const blog = blogs[currentBlogIndex];
         publishedBlogs.innerHTML = "";
         displayBlog(blog);
-    });
-
-    // Save About Us Content
-    saveAboutBtn.addEventListener("click", () => {
-        const aboutText = aboutTextarea.value.trim();
-        if (aboutText === "") {
-            alert("About Us content cannot be empty!");
-            return;
-        }
-        aboutContent.textContent = aboutText;
-        aboutTextarea.value = "";
     });
 });
