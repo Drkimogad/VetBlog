@@ -63,4 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
             // Additional publish logic can be added here
         }
     });
+
+    // Toggle visibility for blog posts
+    const blogPosts = document.querySelectorAll(".blog-post");
+    blogPosts.forEach((post, index) => {
+        if (index !== 0) post.style.display = "none"; // Hide all except the first one
+    });
+
+    blogList.addEventListener("click", (event) => {
+        if (event.target.classList.contains("publish-btn")) {
+            const blogPost = event.target.closest(".blog-post");
+            blogPost.style.display = "block"; // Show the published post
+        }
+    });
 });
