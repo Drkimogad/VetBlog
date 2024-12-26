@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const blogTextarea = document.getElementById("blog-textarea");
     const blogImageUpload = document.getElementById("blog-image-upload");
     const publishedBlogs = document.getElementById("published-blogs");
+    const saveAboutBtn = document.getElementById("save-about-btn");
+    const aboutTextarea = document.getElementById("about-textarea");
+    const aboutContent = document.getElementById("about-content");
 
     let blogs = [];
     let currentBlogIndex = 0;
@@ -96,5 +99,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const blog = blogs[currentBlogIndex];
         publishedBlogs.innerHTML = "";
         displayBlog(blog);
+    });
+
+    // Save About Us Content
+    saveAboutBtn.addEventListener("click", () => {
+        const aboutText = aboutTextarea.value.trim();
+        if (aboutText === "") {
+            alert("About Us content cannot be empty!");
+            return;
+        }
+        aboutContent.textContent = aboutText;
+        aboutTextarea.value = "";
     });
 });
