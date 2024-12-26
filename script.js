@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             blogs.push(blog);
             displayBlog(blog);
             blogTextarea.value = "";
+            blogImageUpload.value = "";
         }
     });
 
@@ -73,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteBtn.className = "delete-btn";
         deleteBtn.addEventListener("click", () => {
             publishedBlogs.removeChild(blogPost);
+            blogs = blogs.filter(b => b !== blog);
         });
         actions.appendChild(deleteBtn);
 
