@@ -8,10 +8,20 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to Vet Blog</h1>
+        <div class="hero-banner">
+            <h1>Welcome to Vet Blog</h1>
+            <p>Your source for veterinary insights and stories</p>
+        </div>
     </header>
 
     <main>
+        <section id="about-us">
+            <h2>About Us</h2>
+            <textarea id="about-textarea" placeholder="Write about us..." rows="4"></textarea>
+            <button id="save-about-btn">Save</button>
+            <div id="about-content"></div>
+        </section>
+
         <section id="blogpost">
             <textarea id="blog-textarea" placeholder="Write your blog here..." rows="10"></textarea>
             <input type="file" id="blog-image-upload" accept="image/*">
