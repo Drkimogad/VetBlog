@@ -1,15 +1,16 @@
 // script.js
 document.addEventListener("DOMContentLoaded", () => {
-    // Hero Banner Functionality
     const heroUpload = document.getElementById("hero-upload");
     const heroBanner = document.getElementById("hero-banner");
 
+    // Restore saved banner
     const savedBanner = localStorage.getItem("hero-banner");
     if (savedBanner) {
         heroBanner.src = savedBanner;
         heroBanner.style.display = "block";
     }
 
+    // Handle hero banner upload
     heroUpload.addEventListener("change", (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -18,33 +19,35 @@ document.addEventListener("DOMContentLoaded", () => {
             heroBanner.style.display = "block";
             localStorage.setItem("hero-banner", e.target.result);
         };
-        if (file) reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
     });
 
-    // Blog Posts Functionality
+    // Blog section
     const blogList = document.getElementById("blog-list");
     const addBlogBtn = document.getElementById("add-blog-btn");
 
+    // Add new blog post
     addBlogBtn.addEventListener("click", () => {
-        const postElement = document.createElement("div");
-        postElement.className = "blog-post";
-        postElement.innerHTML = `
-            <textarea class="blog-content">Write your blog here...</textarea>
+        const post = document.createElement("div");
+        post.classList.add("blog-post");
+        post.innerHTML = `
+            <textarea placeholder="Write your blog here..."></textarea>
             <button class="publish-btn">Publish</button>
             <button class="like-btn">Like</button>
             <button class="share-btn">Share</button>
         `;
-        blogList.appendChild(postElement);
+        blogList.appendChild(post);
     });
 
+    // Blog buttons functionality
     blogList.addEventListener("click", (event) => {
         if (event.target.classList.contains("publish-btn")) {
-            const blogContent = event.target.previousElementSibling.value;
-            alert("Published: " + blogContent);
+            const content = event.target.previousElementSibling.value;
+            alert(`Blog published: ${content}`);
         } else if (event.target.classList.contains("like-btn")) {
-            alert("You liked this post!");
+            alert("You liked this blog!");
         } else if (event.target.classList.contains("share-btn")) {
-            alert("Post shared!");
+            alert("Blog shared!");
         }
     });
 });
