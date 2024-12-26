@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Hero banner functionality
     const heroUpload = document.getElementById("hero-upload");
     const heroBanner = document.getElementById("hero-banner");
     const savedBanner = localStorage.getItem("hero-banner");
@@ -14,11 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.onload = (e) => {
             heroBanner.src = e.target.result;
             heroBanner.style.display = "block";
-            localStorage.setItem("hero-banner", e.target.result);
+            localStorage.setItem("hero-banner", e.target.result); 
         };
         if (file) reader.readAsDataURL(file);
     });
 
+    // About Us contenteditable save
     const aboutUsText = document.getElementById("about-us-text");
     const savedAboutUs = localStorage.getItem("about-us");
 
@@ -30,37 +32,33 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("about-us", aboutUsText.textContent);
     });
 
+    // Blog functionality
     const blogList = document.getElementById("blog-list");
     const addBlogBtn = document.getElementById("add-blog-btn");
-    const blogTextArea = document.getElementById("blog-textarea");
-    const blogImageInput = document.getElementById("blog-image-input");
+    const newBlogContent = document.getElementById("new-blog-content");
 
     addBlogBtn.addEventListener("click", () => {
+        const blogPostContent = newBlogContent.value;
         const postElement = document.createElement("div");
         postElement.className = "blog-post";
         postElement.innerHTML = `
-            <h2>New Blog Post</h2>
-            <textarea class="blog-content" placeholder="Write your blog content..."></textarea>
-            <input type="file" class="blog-image-upload" />
+            <p>${blogPostContent}</p>
+            <textarea class="blog-content" placeholder="Add photo to your post..."></textarea>
             <button class="publish-btn">Publish</button>
             <button class="delete-btn">Delete</button>
-            <div class="blog-actions">
-                <button class="like-btn">Like</button>
-                <button class="share-btn">Share</button>
-            </div>
         `;
         blogList.appendChild(postElement);
-    });
+        newBlogContent.value = ""; // Clear the text area after adding the blog
 
-    blogList.addEventListener("click", (event) => {
-        if (event.target.classList.contains("publish-btn")) {
-            const blogContent = event.target.previousElementSibling.previousElementSibling.value;
-            const blogImage = event.target.previousElementSibling.previousElementSibling.previousElementSibling.files[0];
-            const reader = new FileReader();
-            if (blogImage) {
-                reader.onload = (e) => {
-                    const publishedPost = document.createElement("div");
-                    publishedPost.classList.add("published-post");
-                    publishedPost.innerHTML = `
-                        <div class="post-content">
-                            <img src="$
+        // Handle publish button click
+        postElement.querySelector(".publish-btn").addEventListener("click", () => {
+            const blogContent = postElement.querySelector(".blog-content").value;
+            postElement.querySelector("p").textContent = blogContent; // Update the post content with image or text
+        });
+
+        // Handle delete button click
+        postElement.querySelector(".delete-btn").addEventListener("click", () => {
+            blogList.removeChild(postElement);
+        });
+    });
+});
