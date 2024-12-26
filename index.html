@@ -3,55 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My VetBlog</title>
+    <title>Vet Blog</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1 id="hero-title">Welcome to My VetBlog</h1>
-        <input type="file" id="hero-upload" accept="image/*" style="margin-top: 10px;">
-        <img id="hero-banner" alt="Hero Banner" style="width: 100%; max-height: 300px; display: none;">
+        <h1>Vet Blog</h1>
+        <input type="file" id="hero-upload" accept="image/*">
+        <img id="hero-banner" alt="Hero Banner" />
     </header>
-
+    
     <section id="about-us">
-        <p id="about-us-text" contenteditable="true">Your go-to resource for small animal care, preventive tips, and more.</p>
+        <h2>About Us</h2>
+        <div id="about-us-text" contenteditable="true">Enter your About Us content here...</div>
+    </section>
+    
+    <section id="blog-section">
+        <h2>Blog Posts</h2>
+        <div id="blog-list"></div>
+        <button id="add-blog-btn">Add Another Blog</button>
     </section>
 
-    <main>
-        <div id="blog-list">
-            <!-- First blog post -->
-            <div class="blog-post">
-                <h2>First Blog Post</h2>
-                <textarea class="blog-content">This is the content of the first post.</textarea>
-                <button class="publish-btn">Publish</button>
-                <div class="blog-actions">
-                    <button class="like-btn">Like</button>
-                    <button class="share-btn">Share</button>
-                </div>
-            </div>
-            <!-- Placeholder for additional blog posts -->
-        </div>
-        <button id="add-blog-btn">Add Another Blog</button>
-    </main>
-
-    <div class="links">
-        <a href="https://www.tiktok.com" id="tiktok" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/Tiktok_icon.svg.png" alt="TikTok" style="width: 30px; height: 30px;">
-        </a>
-        <a href="https://www.wordpress.com" id="wordpress" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/640px-Wordpress_circle.png" alt="WordPress" style="width: 30px; height: 30px;">
-        </a>
-        <a href="https://www.youtube.com" id="youtube" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/YouTube_white_square_icon_(2024).svg.png" alt="YouTube" style="width: 30px; height: 30px;">
-        </a>
-        <a href="https://www.instagram.com" id="instagram" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/Instagram_logo_2022.svg.png" alt="Instagram" style="width: 30px; height: 30px;">
-        </a>
-    </div>
-
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 My Blog. All rights reserved.</p>
+        <div class="links">
+            <a href="https://youtube.com" target="_blank">
+                <img src="https://raw.githubusercontent.com/Drkimogad/VetBlog/main/YouTube_white_square_icon_(2024).svg.png" alt="YouTube" width="40">
+            </a>
+            <a href="https://tiktok.com" target="_blank">
+                <img src="https://raw.githubusercontent.com/Drkimogad/VetBlog/main/Tiktok_icon.svg.png" alt="TikTok" width="40">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="https://raw.githubusercontent.com/Drkimogad/VetBlog/main/Instagram_logo_2022.svg.png" alt="Instagram" width="40">
+            </a>
+            <a href="https://wordpress.com" target="_blank">
+                <img src="https://raw.githubusercontent.com/Drkimogad/VetBlog/main/640px-Wordpress_circle.png" alt="WordPress" width="40">
+            </a>
         </div>
     </footer>
 
