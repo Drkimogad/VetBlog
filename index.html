@@ -3,42 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vet Blog</title>
+    <title>VetBlog</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <h1>Vet Blog</h1>
-    </header>
-    
-    <!-- Hero Banner Section -->
-    <div class="hero-banner-container">
-        <img id="hero-banner" src="" alt="Hero Banner" style="display: none;" />
+        <h1>VetBlog</h1>
         <input type="file" id="hero-upload" />
-    </div>
+        <img id="hero-banner" style="display: none" />
+    </header>
+
+    <!-- About Us Section -->
+    <section id="about-us">
+        <h2>About Us</h2>
+        <div contenteditable="true" id="about-us-text">Write your content here...</div>
+    </section>
 
     <!-- Blog Section -->
-    <div id="blog-list"></div>
-    <button id="add-blog-btn">Add Blog</button>
-    <textarea id="blog-textarea" placeholder="Write your blog here..." rows="10" cols="50"></textarea>
-    <input type="file" id="blog-image-input" accept="image/*" />
-    <button id="publish-blog-btn">Publish</button>
+    <section id="blog-section">
+        <h2>Blog Posts</h2>
+        <textarea id="new-blog-content" placeholder="Write your new blog post here..." rows="10" cols="80"></textarea><br>
+        <button id="add-blog-btn">Add Blog Post</button>
+        
+        <div id="blog-list"></div>
+    </section>
 
-    <!-- Social Media Links with Icons -->
-    <div class="social-media-links">
-        <a href="https://facebook.com" id="facebook"></a>
-        <a href="https://twitter.com" id="twitter"></a>
-        <a href="https://youtube.com" id="youtube"></a>
-        <a href="https://tiktok.com" id="tiktok"></a>
-        <a href="https://instagram.com" id="instagram"></a>
-        <a href="https://wordpress.com" id="wordpress"></a>
-    </div>
+    <!-- Social Media Links -->
+    <section class="links">
+        <a href="https://www.youtube.com" target="_blank">
+            <img src="https://github.com/Drkimogad/VetBlog/blob/main/YouTube_white_square_icon_(2024).svg.png" alt="YouTube" />
+        </a>
+        <a href="https://www.tiktok.com" target="_blank">
+            <img src="https://github.com/Drkimogad/VetBlog/blob/main/Tiktok_icon.svg.png" alt="TikTok" />
+        </a>
+        <a href="https://www.instagram.com" target="_blank">
+            <img src="https://github.com/Drkimogad/VetBlog/blob/main/Instagram_logo_2022.svg.png" alt="Instagram" />
+        </a>
+        <a href="https://www.wordpress.com" target="_blank">
+            <img src="https://github.com/Drkimogad/VetBlog/blob/main/640px-Wordpress_circle.png" alt="WordPress" />
+        </a>
+    </section>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
         <p>&copy; 2024 VetBlog. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
