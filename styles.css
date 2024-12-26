@@ -15,7 +15,7 @@ header {
 
 .hero-banner {
     padding: 50px 20px;
-    background-image: url('banner-image.jpg'); /* You can replace this with your desired background image */
+    background-image: url('banner-image.jpg'); /* Replace with your desired background image */
     background-size: cover;
     background-position: center;
     color: white;
@@ -50,9 +50,13 @@ main {
     margin-bottom: 20px;
 }
 
-#blog-textarea {
+#blog-textarea, #blog-image-upload, #publish-btn, #toggle-next-btn {
+    display: block;
     width: 100%;
     margin-bottom: 10px;
+}
+
+#blog-textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -61,6 +65,13 @@ main {
 
 #blog-image-upload {
     margin-bottom: 10px;
+}
+
+#image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    display: block;
 }
 
 button {
@@ -94,16 +105,6 @@ button:hover {
 
 .blog-actions button {
     margin-right: 10px;
-}
-
-#social-media {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#social-media a {
-    margin: 0 10px;
-    display: inline-block;
 }
 
 footer {
