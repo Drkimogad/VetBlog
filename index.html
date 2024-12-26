@@ -9,7 +9,19 @@
 <body>
     <header>
         <h1>Welcome to Vet Blog</h1>
-        <div id="social-media">
+        
+    </header>
+
+    <main>
+        <section id="blogpost">
+            <textarea id="blog-textarea" placeholder="Write your blog here..." rows="10"></textarea>
+            <input type="file" id="blog-image-upload" accept="image/*">
+            <button id="publish-btn">Publish</button>
+            <div id="published-blogs"></div>
+            <button id="toggle-next-btn">Next Blog</button>
+        </section>
+    </main>
+<div id="social-media">
             <a href="https://youtube.com">
                 <img src="https://github.com/Drkimogad/VetBlog/blob/main/YouTube_white_square_icon_(2024).svg.png" alt="YouTube" width="40">
             </a>
@@ -22,19 +34,7 @@
             <a href="https://wordpress.com">
                 <img src="https://github.com/Drkimogad/VetBlog/blob/main/640px-Wordpress_circle.png" alt="WordPress" width="40">
             </a>
-        </div>
-    </header>
-
-    <main>
-        <section id="blogpost">
-            <textarea id="blog-textarea" placeholder="Write your blog here..." rows="10"></textarea>
-            <input type="file" id="blog-image-upload" accept="image/*">
-            <button id="publish-btn">Publish</button>
-            <div id="published-blogs"></div>
-            <button id="toggle-next-btn">Next Blog</button>
-        </section>
-    </main>
-
+</div>
     <footer>
         <p>&copy; 2024 Vet Blog. All rights reserved.</p>
     </footer>
