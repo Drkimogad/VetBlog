@@ -39,21 +39,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addBlogBtn.addEventListener("click", () => {
         const blogPostContent = newBlogContent.value;
+        if (!blogPostContent.trim()) return; // Prevent empty blog posts
         const postElement = document.createElement("div");
         postElement.className = "blog-post";
         postElement.innerHTML = `
             <p>${blogPostContent}</p>
-            <textarea class="blog-content" placeholder="Add photo to your post..."></textarea>
-            <button class="publish-btn">Publish</button>
-            <button class="delete-btn">Delete</button>
+            <div class="blog-actions">
+                <button class="like-btn">Like</button>
+                <button class="share-btn">Share</button>
+                <button class="delete-btn">Delete</button>
+            </div>
         `;
         blogList.appendChild(postElement);
         newBlogContent.value = ""; // Clear the text area after adding the blog
 
-        // Handle publish button click
-        postElement.querySelector(".publish-btn").addEventListener("click", () => {
-            const blogContent = postElement.querySelector(".blog-content").value;
-            postElement.querySelector("p").textContent = blogContent; // Update the post content with image or text
+        // Handle like button click
+        postElement.querySelector(".like-btn").addEventListener("click", () => {
+            alert("You liked this post!");
+        });
+
+        // Handle share button click
+        postElement.querySelector(".share-btn").addEventListener("click", () => {
+            alert("Post shared!");
         });
 
         // Handle delete button click
