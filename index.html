@@ -3,44 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetBlog</title>
+    <title>Vet Blog</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <h1>VetBlog</h1>
-        <input type="file" id="hero-upload" />
-        <img id="hero-banner" style="display: none" />
+        <h1>Welcome to Vet Blog</h1>
+        <div id="social-media">
+            <a href="https://youtube.com">
+                <img src="https://github.com/Drkimogad/VetBlog/blob/main/YouTube_white_square_icon_(2024).svg.png" alt="YouTube" width="40">
+            </a>
+            <a href="https://tiktok.com">
+                <img src="https://github.com/Drkimogad/VetBlog/blob/main/Tiktok_icon.svg.png" alt="TikTok" width="40">
+            </a>
+            <a href="https://instagram.com">
+                <img src="https://github.com/Drkimogad/VetBlog/blob/main/Instagram_logo_2022.svg.png" alt="Instagram" width="40">
+            </a>
+            <a href="https://wordpress.com">
+                <img src="https://github.com/Drkimogad/VetBlog/blob/main/640px-Wordpress_circle.png" alt="WordPress" width="40">
+            </a>
+        </div>
     </header>
 
-    <!-- About Us Section -->
-    <section id="about-us">
-        <h2>About Us</h2>
-        <div contenteditable="true" id="about-us-text">Write your content here...</div>
-    </section>
+    <main>
+        <section id="blogpost">
+            <textarea id="blog-textarea" placeholder="Write your blog here..." rows="10"></textarea>
+            <input type="file" id="blog-image-upload" accept="image/*">
+            <button id="publish-btn">Publish</button>
+            <div id="published-blogs"></div>
+            <button id="toggle-next-btn">Next Blog</button>
+        </section>
+    </main>
 
-    <!-- Blog Section -->
-    <section id="blog-section">
-        <h2>Blog Posts</h2>
-        <textarea id="new-blog-content" placeholder="Write your new blog post here..." rows="10" cols="80"></textarea><br>
-        <button id="add-blog-btn">Add Blog Post</button>
-        
-        <div id="blog-list"></div>
-    </section>
+    <footer>
+        <p>&copy; 2024 Vet Blog. All rights reserved.</p>
+    </footer>
 
-    <!-- Social Media Links -->
-    <section class="links">
-        <a href="https://www.youtube.com" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/YouTube_white_square_icon_(2024).svg.png" alt="YouTube" style="width: 30px; height: 30px;" />
-        </a>
-        <a href="https://www.tiktok.com" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/Tiktok_icon.svg.png" alt="TikTok" style="width: 30px; height: 30px;" />
-        </a>
-        <a href="https://www.instagram.com" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/Instagram_logo_2022.svg.png" alt="Instagram" style="width: 30px; height: 30px;" />
-        </a>
-        <a href="https://www.wordpress.com" target="_blank">
-            <img src="https://github.com/Drkimogad/VetBlog/blob/main/640px-Wordpress_circle.png" alt="WordPress" style="width: 30px; height: 30px;" />
-        </a>
-    </
+    <script src="scripts.js"></script>
+</body>
+</html>
