@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const aboutTextarea = document.getElementById('about-textarea');
     const saveAboutBtn = document.getElementById('save-about-btn');
     const aboutContent = document.getElementById('about-content');
@@ -10,18 +10,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const toggleNextBtn = document.getElementById('toggle-next-btn');
 
     // Save "About Us" content
-    saveAboutBtn.addEventListener('click', function() {
-        const aboutText = aboutTextarea.value;
-        aboutContent.innerHTML = aboutText;
-        aboutTextarea.value = '';
+    saveAboutBtn.addEventListener('click', function () {
+        const aboutText = aboutTextarea.value.trim();
+        if (aboutText) {
+            aboutContent.textContent = aboutText;
+            aboutTextarea.value = '';
+        } else {
+            alert('Please enter some content for "About Us".');
+        }
     });
 
     // Display uploaded image
-    blogImageUpload.addEventListener('change', function(event) {
+    blogImageUpload.addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 imagePreview.src = e.target.result;
                 imagePreview.style.display = 'block';
             };
@@ -30,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Publish a blog post
-    publishBtn.addEventListener('click', function() {
-        const blogText = blogTextarea.value;
+    publishBtn.addEventListener('click', function () {
+        const blogText = blogTextarea.value.trim();
         const blogImageSrc = imagePreview.src;
 
         if (blogText) {
@@ -39,10 +43,10 @@ document.addEventListener('DOMContentLoaded', function() {
             blogPost.className = 'blog-post';
 
             const blogContent = document.createElement('p');
-            blogContent.innerText = blogText;
+            blogContent.textContent = blogText;
             blogPost.appendChild(blogContent);
 
-            if (blogImageSrc) {
+            if (blogImageSrc && imagePreview.style.display === 'block') {
                 const blogImage = document.createElement('img');
                 blogImage.src = blogImageSrc;
                 blogPost.appendChild(blogImage);
@@ -50,12 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Add delete button
             const deleteBtn = document.createElement('button');
-            deleteBtn.innerText = 'Delete';
-            deleteBtn.addEventListener('click', function() {
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', function () {
                 publishedBlogs.removeChild(blogPost);
             });
             blogPost.appendChild(deleteBtn);
 
+            // Append blog post to published blogs
             publishedBlogs.appendChild(blogPost);
 
             // Clear inputs
@@ -63,14 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
             blogImageUpload.value = '';
             imagePreview.style.display = 'none';
             imagePreview.src = '';
+        } else {
+            alert('Please write some content for the blog.');
         }
     });
 
     // Toggle to the next blog post
-    toggleNextBtn.addEventListener('click', function() {
+    toggleNextBtn.addEventListener('click', function () {
         const blogPosts = publishedBlogs.getElementsByClassName('blog-post');
         if (blogPosts.length > 0) {
             publishedBlogs.appendChild(blogPosts[0]);
+        } else {
+            alert('No more blog posts to toggle.');
         }
     });
 });
