@@ -29,43 +29,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Example: Add console.log to verify event listener
-publishBtn.addEventListener('click', function() {
-    console.log('Publish button clicked'); // This should log when the button is clicked
-    const blogText = blogTextarea.value;
-    const blogImageSrc = imagePreview.src;
+    // Publish a blog post
+    publishBtn.addEventListener('click', function() {
+        const blogText = blogTextarea.value;
+        const blogImageSrc = imagePreview.src;
 
-    if (blogText) {
-        const blogPost = document.createElement('div');
-        blogPost.className = 'blog-post';
+        if (blogText) {
+            const blogPost = document.createElement('div');
+            blogPost.className = 'blog-post';
 
-        const blogContent = document.createElement('p');
-        blogContent.innerText = blogText;
-        blogPost.appendChild(blogContent);
+            const blogContent = document.createElement('p');
+            blogContent.innerText = blogText;
+            blogPost.appendChild(blogContent);
 
-        if (blogImageSrc) {
-            const blogImage = document.createElement('img');
-            blogImage.src = blogImageSrc;
-            blogPost.appendChild(blogImage);
+            if (blogImageSrc) {
+                const blogImage = document.createElement('img');
+                blogImage.src = blogImageSrc;
+                blogPost.appendChild(blogImage);
+            }
+
+            // Add delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerText = 'Delete';
+            deleteBtn.addEventListener('click', function() {
+                publishedBlogs.removeChild(blogPost);
+            });
+            blogPost.appendChild(deleteBtn);
+
+            publishedBlogs.appendChild(blogPost);
+
+            // Clear inputs
+            blogTextarea.value = '';
+            blogImageUpload.value = '';
+            imagePreview.style.display = 'none';
+            imagePreview.src = '';
         }
-
-        // Add delete button
-        const deleteBtn = document.createElement('button');
-        deleteBtn.innerText = 'Delete';
-        deleteBtn.addEventListener('click', function() {
-            publishedBlogs.removeChild(blogPost);
-        });
-        blogPost.appendChild(deleteBtn);
-
-        publishedBlogs.appendChild(blogPost);
-
-        // Clear inputs
-        blogTextarea.value = '';
-        blogImageUpload.value = '';
-        imagePreview.style.display = 'none';
-        imagePreview.src = '';
-    }
-});
+    });
 
     // Toggle to the next blog post
     toggleNextBtn.addEventListener('click', function() {
