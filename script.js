@@ -1,59 +1,98 @@
-        // Display a specific blog by index
-        function displayBlog(index) {
-            publishedBlogs.innerHTML = ""; // Clear previous content
+document.addEventListener("DOMContentLoaded", () => {
+    const blogs = [];
+    let currentIndex = 0;
 
-            if (blogs.length === 0) {
-                publishedBlogs.innerHTML = "<p>No blogs available</p>";
-                return;
-            }
+    const blogTextarea = document.getElementById("blog-textarea");
+    const blogImageUpload = document.getElementById("blog-image-upload");
+    const imagePreview = document.getElementById("image-preview");
+    const publishBtn = document.getElementById("publish-btn");
+    const publishedBlogs = document.getElementById("published-blogs");
+    const toggleNextBtn = document.getElementById("toggle-next-btn");
 
-            const blog = blogs[index];
-            const blogDiv = document.createElement("div");
-            blogDiv.className = "blog-item";
+    // Handle image preview
+    blogImageUpload.addEventListener("change", () => {
+        const file = blogImageUpload.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                imagePreview.src = reader.result;
+                imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = "none";
+        }
+    });
 
-            const blogContent = document.createElement("p");
-            blogContent.textContent = blog.text;
-            blogDiv.appendChild(blogContent);
+    // Publish a new blog
+    publishBtn.addEventListener("click", () => {
+        const text = blogTextarea.value.trim();
+        const image = imagePreview.src;
 
-            if (blog.image) {
-                const blogImage = document.createElement("img");
-                blogImage.src = blog.image;
-                blogImage.alt = "Blog Image";
-                blogImage.style.maxWidth = "100%";
-                blogDiv.appendChild(blogImage);
-            }
-
-            const deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "Delete";
-            deleteBtn.addEventListener("click", () => deleteBlog(index));
-            blogDiv.appendChild(deleteBtn);
-
-            publishedBlogs.appendChild(blogDiv);
+        if (!text) {
+            alert("Please write something for the blog.");
+            return;
         }
 
-        // Move to the next blog
-        toggleNextBtn.addEventListener("click", () => {
-            if (blogs.length === 0) {
-                alert("No blogs to show.");
-                return;
-            }
+        blogs.push({ text, image });
+        blogTextarea.value = "";
+        blogImageUpload.value = "";
+        imagePreview.style.display = "none";
+        displayBlog(blogs.length - 1);
+    });
 
-            currentIndex = (currentIndex + 1) % blogs.length; // Loop back to the first blog
-            displayBlog(currentIndex);
-        });
+    // Display a specific blog by index
+    function displayBlog(index) {
+        publishedBlogs.innerHTML = ""; // Clear previous content
 
-        // Delete a specific blog
-        function deleteBlog(index) {
-            blogs.splice(index, 1); // Remove the blog from the array
-
-            if (currentIndex >= blogs.length) {
-                currentIndex = blogs.length - 1; // Adjust index to show the last blog
-            }
-
-            displayBlog(currentIndex);
-            alert("Blog deleted successfully!");
+        if (blogs.length === 0) {
+            publishedBlogs.innerHTML = "<p>No blogs available</p>";
+            return;
         }
 
-        // Initialize with no blogs
+        const blog = blogs[index];
+        const blogDiv = document.createElement("div");
+        blogDiv.className = "blog-post";
+
+        const blogContent = document.createElement("p");
+        blogContent.textContent = blog.text;
+        blogDiv.appendChild(blogContent);
+
+        if (blog.image) {
+            const blogImage = document.createElement("img");
+            blogImage.src = blog.image;
+            blogImage.alt = "Blog Image";
+            blogDiv.appendChild(blogImage);
+        }
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.addEventListener("click", () => deleteBlog(index));
+        blogDiv.appendChild(deleteBtn);
+
+        publishedBlogs.appendChild(blogDiv);
+    }
+
+    // Navigate to the next blog
+    toggleNextBtn.addEventListener("click", () => {
+        if (blogs.length === 0) {
+            alert("No blogs to show.");
+            return;
+        }
+
+        currentIndex = (currentIndex + 1) % blogs.length;
         displayBlog(currentIndex);
     });
+
+    // Delete a blog
+    function deleteBlog(index) {
+        blogs.splice(index, 1);
+
+        if (currentIndex >= blogs.length) {
+            currentIndex = blogs.length - 1;
+        }
+
+        displayBlog(currentIndex);
+        alert("Blog deleted successfully!");
+    }
+});
