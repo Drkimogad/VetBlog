@@ -9,12 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const publishedBlogs = document.getElementById("published-blogs");
     const toggleNextBtn = document.getElementById("toggle-next-btn");
 
+    console.log("DOM fully loaded!");
+
     // Handle image preview
     blogImageUpload.addEventListener("change", () => {
+        console.log("Image upload changed");
         const file = blogImageUpload.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
+                console.log("Image loaded:", reader.result);
                 imagePreview.src = reader.result;
                 imagePreview.style.display = "block";
             };
@@ -26,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Publish a new blog
     publishBtn.addEventListener("click", () => {
+        console.log("Publish button clicked");
         const text = blogTextarea.value.trim();
         const image = imagePreview.src;
 
@@ -35,14 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         blogs.push({ text, image });
+        console.log("Blogs array:", blogs);
+
         blogTextarea.value = "";
         blogImageUpload.value = "";
         imagePreview.style.display = "none";
-        displayBlog(blogs.length - 1);
+
+        displayBlog(blogs.length - 1); // Show the newly added blog
     });
 
     // Display a specific blog by index
     function displayBlog(index) {
+        console.log("Displaying blog at index:", index);
         publishedBlogs.innerHTML = ""; // Clear previous content
 
         if (blogs.length === 0) {
@@ -75,21 +84,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Navigate to the next blog
     toggleNextBtn.addEventListener("click", () => {
+        console.log("Next button clicked");
         if (blogs.length === 0) {
             alert("No blogs to show.");
             return;
         }
 
-        currentIndex = (currentIndex + 1) % blogs.length;
+        currentIndex = (currentIndex + 1) % blogs.length; // Cycle back to the first blog
         displayBlog(currentIndex);
     });
 
     // Delete a blog
     function deleteBlog(index) {
+        console.log("Deleting blog at index:", index);
         blogs.splice(index, 1);
 
         if (currentIndex >= blogs.length) {
-            currentIndex = blogs.length - 1;
+            currentIndex = blogs.length - 1; // Prevent out-of-bounds index
         }
 
         displayBlog(currentIndex);
