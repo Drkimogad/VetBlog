@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const blogSection = document.getElementById("blogpost");
     blogSection.insertBefore(togglePrevBtn, toggleNextBtn);
 
+    console.log("Previous button added to DOM");
+
     // Save blogs to LocalStorage
     function saveToLocalStorage() {
         localStorage.setItem("blogs", JSON.stringify(blogs));
