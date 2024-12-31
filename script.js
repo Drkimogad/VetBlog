@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM fully loaded and parsed");
+
     // Load blogs from LocalStorage (or set as empty if none)
     let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
     let currentIndex = 0;
@@ -12,11 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleNextBtn = document.getElementById("toggle-next-btn");
     const togglePrevBtn = document.createElement("button");
 
+    console.log("DOM elements loaded");
+
     // Setup the Previous button
     togglePrevBtn.textContent = "Previous Blog";
     togglePrevBtn.style.marginRight = "10px";
     togglePrevBtn.disabled = true;
     togglePrevBtn.addEventListener("click", () => {
+        console.log("Previous button clicked");
         if (blogs.length === 0) return;
         currentIndex = (currentIndex - 1 + blogs.length) % blogs.length;
         displayBlog(currentIndex);
@@ -24,21 +29,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add the "Previous Blog" button before the "Next Blog" button
     const blogSection = document.getElementById("blogpost");
-    blogSection.appendChild(togglePrevBtn);
+    blogSection.insertBefore(togglePrevBtn, toggleNextBtn);
 
     // Save blogs to LocalStorage
     function saveToLocalStorage() {
         localStorage.setItem("blogs", JSON.stringify(blogs));
+        console.log("Blogs saved to LocalStorage");
     }
 
     // Handle image preview
     blogImageUpload.addEventListener("change", () => {
+        console.log("Image upload changed");
         const file = blogImageUpload.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
                 imagePreview.src = reader.result;
                 imagePreview.style.display = "block";
+                console.log("Image preview updated");
             };
             reader.readAsDataURL(file);
         } else {
@@ -48,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Publish a new blog
     publishBtn.addEventListener("click", () => {
+        console.log("Publish button clicked");
         const text = blogTextarea.value.trim();
         const image = imagePreview.src;
 
@@ -70,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Display a specific blog by index
     function displayBlog(index) {
+        console.log("Displaying blog at index", index);
         publishedBlogs.innerHTML = ""; // Clear previous content
 
         if (blogs.length === 0) {
@@ -106,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Navigate to the next blog
     toggleNextBtn.addEventListener("click", () => {
+        console.log("Next button clicked");
         if (blogs.length === 0) return;
         currentIndex = (currentIndex + 1) % blogs.length;
         displayBlog(currentIndex);
@@ -113,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Delete a blog
     function deleteBlog(index) {
+        console.log("Deleting blog at index", index);
         blogs.splice(index, 1);
         saveToLocalStorage();
 
