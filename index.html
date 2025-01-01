@@ -1,44 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vet Blog</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="hero-banner">
-            <h1>Welcome to Vet Blog</h1>
-            <p>Your source for veterinary insights and stories</p>
-        </div>
-    </header>
+  <!-- Header -->
+  <header>
+    <h1>My Blog</h1>
+  </header>
+  
+  <!-- Blog Content Area -->
+  <div class="blog-container">
+    <h2 id="post-title">Loading...</h2>
+    <p id="post-content">Please wait while the content loads...</p>
+    <div id="youtube-video"></div> <!-- YouTube Video Embedding -->
+    <button id="next-blog-btn">Next Blog</button>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 My Blog. All rights reserved.</p>
+  </footer>
 
-    <main>
-        <!-- About Us Section -->
-        <section id="about-us">
-            <h2>About Us</h2>
-            <textarea id="about-textarea" placeholder="Write about us..." rows="4"></textarea>
-            <button id="save-about-btn">Save</button>
-            <div id="about-content"></div>
-        </section>
-
-        <!-- Blog Post Section -->
-        <section id="blogpost">
-            <h2>Create a New Blog Post</h2>
-            <textarea id="blog-textarea" placeholder="Write your blog here..." rows="10"></textarea>
-            <input type="file" id="blog-image-upload" accept="image/*">
-            <img id="image-preview" style="display: none;" />
-            <button id="publish-btn">Publish</button>
-            <div id="published-blogs"></div>
-            <button id="toggle-next-btn">Next Blog</button>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Vet Blog. All rights reserved.</p>
-    </footer>
-
-    <script src="scripts.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
