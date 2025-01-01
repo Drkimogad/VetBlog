@@ -102,8 +102,9 @@ header .hero-banner p {
 #blogpost img#image-preview {
     max-width: 100%;
     margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 2px solid #ffaa00; /* Enhanced for consistency */
+    border-radius: 6px;
+    display: none; /* Hidden by default */
 }
 
 #blogpost button {
@@ -124,8 +125,11 @@ header .hero-banner p {
 
 #published-blogs {
     margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ddd; /* Added for better separation */
 }
 
+/* Blog Post Display */
 .blog-post {
     background: #fff;
     border: 1px solid #ddd;
@@ -142,8 +146,8 @@ header .hero-banner p {
 .blog-post img {
     max-width: 100%;
     margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 2px solid #ffaa00; /* Matches preview border */
+    border-radius: 6px;
 }
 
 .blog-post button {
@@ -161,6 +165,24 @@ header .hero-banner p {
     background-color: #c9302c;
 }
 
+/* Debugging & Placeholder Elements */
+#toggle-next-btn {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #ffaa00;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#toggle-next-btn:hover {
+    background-color: #cc8800;
+}
+
 /* Responsive Layout */
 @media (max-width: 768px) {
     body {
@@ -173,5 +195,9 @@ header .hero-banner p {
 
     header .hero-banner p {
         font-size: 1rem;
+    }
+
+    #about-us, #blogpost {
+        max-width: 90%;
     }
 }
