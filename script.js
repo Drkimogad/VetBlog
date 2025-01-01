@@ -10,17 +10,29 @@ let currentPostIndex = 0;
 
 // Function to load the post based on the current index
 function loadPost(index) {
+  const postTitleElement = document.getElementById("postTitle");
+  const postContentElement = document.getElementById("postContent");
+  const errorMessageElement = document.getElementById("errorMessage");
+
+  // Reset error message if any
+  if (errorMessageElement) {
+    errorMessageElement.textContent = "";
+  }
+
   // Validate the index
   if (index >= 0 && index < blogPosts.length) {
     const post = blogPosts[index];
-    document.getElementById("postTitle").innerText = post.title;
-    document.getElementById("postContent").innerText = post.content;
+    postTitleElement.innerText = post.title;
+    postContentElement.innerText = post.content;
   } else {
+    if (errorMessageElement) {
+      errorMessageElement.textContent = "Error: Invalid blog post.";
+    }
     console.error("Invalid index:", index);
   }
 }
 
-// Load the first post
+// Load the first post on initial page load
 loadPost(currentPostIndex);
 
 // Event listener for the "Next Blog" button
