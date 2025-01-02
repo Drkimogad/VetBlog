@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Page</title>
+  <title>Blog Navigation</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,15 +13,18 @@
 
   <main>
     <div id="postContainer">
-      <h2>Blog Post Title</h2>
-      <p>This is the content of the blog post...</p>
-      <button>Read More</button>
+      <h2 id="postTitle">Blog Post Title</h2>
+      <p id="postContent">This is the content of the blog post...</p>
+      <p id="errorMessage" style="color: red;"></p>
+      <button id="nextButton">Next Blog</button>
     </div>
-    <!-- Add more post containers as needed -->
   </main>
 
   <footer>
     &copy; 2025 My Blog
   </footer>
+
+  <!-- Ensure the file name and path here match your JavaScript file -->
+  <script src="script.js"></script>
 </body>
 </html>
