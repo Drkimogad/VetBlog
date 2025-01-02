@@ -1,8 +1,8 @@
 // Example array of blog posts
 const blogPosts = [
-  { title: "Blog Post 1", content: "This is the first blog post content." },
-  { title: "Blog Post 2", content: "This is the second blog post content." },
-  { title: "Blog Post 3", content: "This is the third blog post content." },
+  { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "" },
+  { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "" },
+  { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "" },
 ];
 
 // Current index for the blog posts
@@ -12,6 +12,8 @@ let currentPostIndex = 0;
 function loadPost(index) {
   const postTitleElement = document.getElementById("postTitle");
   const postContentElement = document.getElementById("postContent");
+  const photoUploadElement = document.getElementById("photoUpload");
+  const youtubeEmbedElement = document.getElementById("youtubeEmbed");
   const errorMessageElement = document.getElementById("errorMessage");
 
   // Reset error message if any
@@ -24,6 +26,8 @@ function loadPost(index) {
     const post = blogPosts[index];
     postTitleElement.innerText = post.title;
     postContentElement.innerText = post.content;
+    photoUploadElement.value = post.photo;
+    youtubeEmbedElement.value = post.youtube;
   } else {
     if (errorMessageElement) {
       errorMessageElement.textContent = "Error: Invalid blog post.";
@@ -54,5 +58,22 @@ document.addEventListener("DOMContentLoaded", function() {
     const aboutUsContent = document.getElementById("aboutUsText").value;
     localStorage.setItem("aboutUsContent", aboutUsContent);
     alert("About Us content saved!");
+  });
+
+  // Event listeners for the blog post buttons
+  document.getElementById("editButton").addEventListener("click", function() {
+    alert("Edit functionality to be implemented.");
+  });
+
+  document.getElementById("deleteButton").addEventListener("click", function() {
+    alert("Delete functionality to be implemented.");
+  });
+
+  document.getElementById("shareButton").addEventListener("click", function() {
+    alert("Share functionality to be implemented.");
+  });
+
+  document.getElementById("printButton").addEventListener("click", function() {
+    window.print();
   });
 });
