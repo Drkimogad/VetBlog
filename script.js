@@ -33,7 +33,9 @@ function loadPost(index) {
 }
 
 // Load the first post on initial page load
-loadPost(currentPostIndex);
+document.addEventListener("DOMContentLoaded", function() {
+  loadPost(currentPostIndex);
+});
 
 // Event listener for the "Next Blog" button
 document.getElementById("nextButton").addEventListener("click", function() {
