@@ -35,11 +35,24 @@ function loadPost(index) {
 // Load the first post on initial page load
 document.addEventListener("DOMContentLoaded", function() {
   loadPost(currentPostIndex);
-});
 
-// Event listener for the "Next Blog" button
-document.getElementById("nextButton").addEventListener("click", function() {
-  // Move to the next post (loop back to the first post if at the end)
-  currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
-  loadPost(currentPostIndex);
+  // Load About Us content from localStorage
+  const savedAboutUsContent = localStorage.getItem("aboutUsContent");
+  if (savedAboutUsContent) {
+    document.getElementById("aboutUsText").value = savedAboutUsContent;
+  }
+
+  // Event listener for the "Next Blog" button
+  document.getElementById("nextButton").addEventListener("click", function() {
+    // Move to the next post (loop back to the first post if at the end)
+    currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
+    loadPost(currentPostIndex);
+  });
+
+  // Event listener for the "Save" button in the About Us section
+  document.getElementById("saveAboutUsButton").addEventListener("click", function() {
+    const aboutUsContent = document.getElementById("aboutUsText").value;
+    localStorage.setItem("aboutUsContent", aboutUsContent);
+    alert("About Us content saved!");
+  });
 });
