@@ -45,7 +45,8 @@ main {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-bottom: 10px;
+  resize: both; /* Allow resizing */
+  min-height: 150px; /* Minimum height */
 }
 
 #saveAboutUsButton {
@@ -55,10 +56,18 @@ main {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+  margin-top: 10px;
 }
 
 #saveAboutUsButton:hover {
   background-color: #45a049;
+}
+
+/* Blog post buttons */
+.post-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
 }
 
 button {
