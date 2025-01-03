@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Navigation</title>
+  <title>VetBlog</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>My Blog</h1>
+    <h1>VetBlog</h1>
   </header>
 
   <!-- Editable About Us Section -->
@@ -21,13 +21,14 @@
   <main>
     <div id="postContainer">
       <h2 id="postTitle">Blog Post Title</h2>
-      <p id="postContent">This is the content of the blog post...</p>
+      <textarea id="postContent" rows="5" cols="50">This is the content of the blog post...</textarea>
       <input type="file" id="photoUpload" accept="image/*">
       <input type="text" id="youtubeEmbed" placeholder="YouTube Embed URL">
       <div class="post-buttons">
         <button id="editButton">Edit</button>
         <button id="deleteButton">Delete</button>
         <button id="shareButton">Share</button>
+        <button id="likeButton">Like</button>
         <button id="printButton">Print</button>
       </div>
       <p id="errorMessage" style="color: red;"></p>
@@ -36,7 +37,7 @@
   </main>
 
   <footer>
-    &copy; 2025 My Blog
+    &copy; 2025 VetBlog
   </footer>
 
   <!-- Ensure the file name and path here match your JavaScript file -->
