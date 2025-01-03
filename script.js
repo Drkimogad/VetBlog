@@ -1,8 +1,8 @@
 // Example array of blog posts
 const blogPosts = [
-  { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "" },
-  { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "" },
-  { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "" },
+  { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "", isOwner: true },
+  { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "", isOwner: false },
+  { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "", isOwner: true },
 ];
 
 // Current index for the blog posts
@@ -28,6 +28,13 @@ function loadPost(index) {
     postContentElement.value = post.content;
     photoUploadElement.value = post.photo;
     youtubeEmbedElement.value = post.youtube;
+
+    // Show or hide owner buttons based on isOwner property
+    const ownerButtons = document.querySelectorAll(".owner-buttons");
+    ownerButtons.forEach(button => {
+      button.style.display = post.isOwner ? "inline-block" : "none";
+    });
+
   } else {
     if (errorMessageElement) {
       errorMessageElement.textContent = "Error: Invalid blog post.";
@@ -67,6 +74,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("deleteButton").addEventListener("click", function() {
     alert("Delete functionality to be implemented.");
+  });
+
+  document.getElementById("publishButton").addEventListener("click", function() {
+    alert("Publish functionality to be implemented.");
   });
 
   document.getElementById("shareButton").addEventListener("click", function() {
