@@ -6,6 +6,7 @@ let blogPosts = [
 ];
 
 // Current index for the blog posts
+// Set this to true for viewer mode, false for edit mode
 let currentPostIndex = 0;
 let readOnlyMode = false; // Read-only mode flag
 
