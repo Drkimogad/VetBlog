@@ -1,8 +1,8 @@
 // Example array of blog posts
 const blogPosts = [
-  { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "", isOwner: true, likes: 0 },
-  { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "", isOwner: false, likes: 0 },
-  { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "", isOwner: true, likes: 0 },
+  { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
+  { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
+  { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
 ];
 
 // Current index for the blog posts
@@ -15,6 +15,7 @@ function loadPost(index) {
   const photoUploadElement = document.getElementById("photoUpload");
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
   const errorMessageElement = document.getElementById("errorMessage");
+  const postImageElement = document.getElementById("postImage");
 
   // Reset error message if any
   if (errorMessageElement) {
@@ -28,6 +29,14 @@ function loadPost(index) {
     postContentElement.value = post.content;
     photoUploadElement.value = post.photo;
     youtubeEmbedElement.value = post.youtube;
+
+    // Display the uploaded image if it exists
+    if (post.photo) {
+      postImageElement.src = post.photo;
+      postImageElement.style.display = "block";
+    } else {
+      postImageElement.style.display = "none";
+    }
 
     // Show or hide owner buttons based on isOwner property
     const ownerButtons = document.querySelectorAll(".owner-buttons");
@@ -58,6 +67,7 @@ function savePost() {
   const postContentElement = document.getElementById("postContent");
   const photoUploadElement = document.getElementById("photoUpload");
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
+  const postImageElement = document.getElementById("postImage");
 
   const post = blogPosts[currentPostIndex];
   post.title = postTitleElement.innerText;
@@ -69,6 +79,9 @@ function savePost() {
   postContentElement.readOnly = true;
   postContentElement.style.border = "none";
 
+  // Save the post to localStorage
+  localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
+
   alert("Post saved!");
 }
 
@@ -78,13 +91,42 @@ function deletePost() {
   if (currentPostIndex >= blogPosts.length) {
     currentPostIndex = 0;
   }
+
+  // Save the updated posts to localStorage
+  localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
+
   loadPost(currentPostIndex);
   alert("Post deleted!");
 }
 
 // Function to share the post
 function sharePost() {
-  alert("Post shared!");
+  const shareOptions = `
+    <div>
+      <button onclick="shareToLinkedIn()">LinkedIn</button>
+      <button onclick="shareToFacebook()">Facebook</button>
+      <button onclick="shareToWordPress()">WordPress</button>
+    </div>
+  `;
+  document.getElementById("errorMessage").innerHTML = shareOptions;
+}
+
+// Function to share to LinkedIn
+function shareToLinkedIn() {
+  alert("Shared to LinkedIn!");
+  blogPosts[currentPostIndex].shares += 1;
+}
+
+// Function to share to Facebook
+function shareToFacebook() {
+  alert("Shared to Facebook!");
+  blogPosts[currentPostIndex].shares += 1;
+}
+
+// Function to share to WordPress
+function shareToWordPress() {
+  alert("Shared to WordPress!");
+  blogPosts[currentPostIndex].shares += 1;
 }
 
 // Function to like the post
@@ -95,6 +137,12 @@ function likePost() {
 
 // Load the first post on initial page load
 document.addEventListener("DOMContentLoaded", function() {
+  // Load blog posts from localStorage if available
+  const savedPosts = localStorage.getItem("blogPosts");
+  if (savedPosts) {
+    blogPosts = JSON.parse(savedPosts);
+  }
+
   loadPost(currentPostIndex);
 
   // Load About Us content from localStorage
@@ -125,5 +173,22 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("likeButton").addEventListener("click", likePost);
   document.getElementById("printButton").addEventListener("click", function() {
     window.print();
+  });
+
+  // Event listener for photo upload
+  document.getElementById("photoUpload").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const postImageElement = document.getElementById("postImage");
+        postImageElement.src = e.target.result;
+        postImageElement.style.display = "block";
+
+        // Save the image data to the current post
+        blogPosts[currentPostIndex].photo = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   });
 });
