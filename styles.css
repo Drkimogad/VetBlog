@@ -144,7 +144,7 @@ footer {
 /* Print styles - specifically for handling image scaling and visibility */
 @media print {
     /* Ensure images are visible and centered */
-    .petCard img {
+    img {
         width: 100%;                 /* Set width to 100% */
         max-width: 150%;             /* Ensure max-width is 100% */
         height: 100%;                /* Maintain aspect ratio */
@@ -158,15 +158,15 @@ footer {
         font-size: 12pt;             /* Adjust font size for printing */
     }
 
-    /* Adjust pet profile details for printing */
-    .petCard h3, .petCard p {
-        font-size: 20pt;             /* Make profile details larger in print */
+    /* Adjust details for printing */
+    h3, p {
+        font-size: 20pt;             /* Make details larger in print */
     }
 
-    /* Ensure each card starts on a new page */
-    .petCard {
-        page-break-inside: avoid;    /* Prevent profile cards from splitting across pages */
-        page-break-after: always;    /* Ensure each card starts on a new page */
+    /* Ensure each section starts on a new page */
+    section {
+        page-break-inside: avoid;    /* Prevent sections from splitting across pages */
+        page-break-after: always;    /* Ensure each section starts on a new page */
         margin-bottom: 0;            /* Remove margin to avoid extra space */
     }
 }
