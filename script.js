@@ -7,6 +7,7 @@ let blogPosts = [
 
 // Current index for the blog posts
 let currentPostIndex = 0;
+let readOnlyMode = false; // Read-only mode flag
 
 // Function to load the post based on the current index
 function loadPost(index) {
@@ -42,6 +43,10 @@ function loadPost(index) {
     ownerButtons.forEach(button => {
       button.style.display = post.isOwner ? "inline-block" : "none";
     });
+
+    // Toggle read-only mode
+    postContentElement.readOnly = readOnlyMode;
+    youtubeEmbedElement.readOnly = readOnlyMode;
 
   } else {
     if (errorMessageElement) {
@@ -100,38 +105,39 @@ function deletePost() {
 
 // Function to share the post
 function sharePost() {
+  const post = blogPosts[currentPostIndex];
   const shareOptions = `
     <div>
-      <button onclick="shareToLinkedIn()">LinkedIn</button>
-      <button onclick="shareToFacebook()">Facebook</button>
-      <button onclick="shareToWordPress()">WordPress</button>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(post.content)}" target="_blank">LinkedIn</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(post.content)}" target="_blank">Facebook</a>
+      <a href="https://wordpress.com/wp-admin/press-this.php?u=${encodeURIComponent(post.content)}" target="_blank">WordPress</a>
     </div>
   `;
   document.getElementById("errorMessage").innerHTML = shareOptions;
-}
-
-// Function to share to LinkedIn
-function shareToLinkedIn() {
-  alert("Shared to LinkedIn!");
-  blogPosts[currentPostIndex].shares += 1;
-}
-
-// Function to share to Facebook
-function shareToFacebook() {
-  alert("Shared to Facebook!");
-  blogPosts[currentPostIndex].shares += 1;
-}
-
-// Function to share to WordPress
-function shareToWordPress() {
-  alert("Shared to WordPress!");
-  blogPosts[currentPostIndex].shares += 1;
 }
 
 // Function to like the post
 function likePost() {
   blogPosts[currentPostIndex].likes += 1;
   alert(`Post liked! Total likes: ${blogPosts[currentPostIndex].likes}`);
+}
+
+// Function to toggle read-only mode
+function toggleReadOnlyMode() {
+  readOnlyMode = !readOnlyMode;
+  loadPost(currentPostIndex);
+}
+
+// Function to print the current post
+function printPost() {
+  const postContainer = document.getElementById("postContainer");
+  const originalContent = document.body.innerHTML;
+  const printContent = postContainer.innerHTML;
+
+  document.body.innerHTML = printContent;
+  window.print();
+  document.body.innerHTML = originalContent;
+  loadPost(currentPostIndex);
 }
 
 // Load the first post on initial page load
@@ -170,9 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("publishButton").addEventListener("click", savePost);
   document.getElementById("shareButton").addEventListener("click", sharePost);
   document.getElementById("likeButton").addEventListener("click", likePost);
-  document.getElementById("printButton").addEventListener("click", function() {
-    window.print();
-  });
+  document.getElementById("printButton").addEventListener("click", printPost);
 
   // Event listener for photo upload
   document.getElementById("photoUpload").addEventListener("change", function(event) {
@@ -190,4 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
       reader.readAsDataURL(file);
     }
   });
+
+  // Event listener for toggling read-only mode
+  document.getElementById("toggleReadOnlyButton").addEventListener("click", toggleReadOnlyMode);
 });
