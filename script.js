@@ -9,7 +9,7 @@ let blogPosts = [
 let currentPostIndex = 0;
 
 // Set this to true for viewer mode, false for edit mode
-let readOnlyMode = true;
+let readOnlyMode = false;
 
 // Function to load the post based on the current index
 function loadPost(index) {
@@ -43,7 +43,7 @@ function loadPost(index) {
     // Show or hide owner buttons based on isOwner property
     const ownerButtons = document.querySelectorAll(".owner-buttons");
     ownerButtons.forEach(button => {
-      button.style.display = post.isOwner ? "inline-block" : "none";
+      button.style.display = readOnlyMode ? "none" : post.isOwner ? "inline-block" : "none";
     });
 
     // Toggle read-only mode
@@ -60,6 +60,9 @@ function loadPost(index) {
       postContentElement.style.border = "1px solid #ccc";
       postContentElement.style.backgroundColor = "#fff";
     }
+
+    // Hide toggle button in read-only mode
+    document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
 
   } else {
     if (errorMessageElement) {
