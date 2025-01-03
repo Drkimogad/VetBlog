@@ -9,7 +9,7 @@ let blogPosts = [
 let currentPostIndex = 0;
 
 // Set this to true for viewer mode, false for edit mode
-let readOnlyMode = false;
+let readOnlyMode = true;
 
 // Function to load the post based on the current index
 function loadPost(index) {
