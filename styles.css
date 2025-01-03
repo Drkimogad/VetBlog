@@ -1,94 +1,241 @@
-* {
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f5f5f5;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
+h1, h2 {
+    text-align: center;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+h1 {
+    color: #6a0dad;
 }
 
-main {
-  padding: 20px;
+h2 {
+    color: #007bff;
 }
 
-#postContainer {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+form {
+    margin: 20px auto;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles for the About Us section */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+}
+
+.button {
+    background-color: #ffa500;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #e69500;
+}
+
+.hidden {
+    display: none;
+}
+
+#dashboard {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* About Us Section */
 #aboutUsSection {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
-  text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px; /* Full width of the page */
 }
 
 #aboutUsText {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  resize: both; /* Allow resizing */
-  min-height: 150px; /* Minimum height */
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: both; /* Allow resizing */
+    min-height: 150px; /* Minimum height */
 }
 
 #saveAboutUsButton {
-  background-color: #4CAF50; /* Green */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 10px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 #saveAboutUsButton:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
-/* Blog post buttons */
+/* Blog Post Container */
+#postContainer {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 800px; /* Full width of the page */
+    margin: 20px auto;
+}
+
 .post-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
 }
 
 button {
-  background-color: #4CAF50; /* Green */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 button:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
 footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Print styles - specifically for handling image scaling and visibility */
+@media print {
+    /* Ensure images are visible and centered */
+    .petCard img {
+        width: 100%;                 /* Set width to 100% */
+        max-width: 150%;             /* Ensure max-width is 100% */
+        height: 100%;                /* Maintain aspect ratio */
+        max-height: 100vh;            /* Prevent images from spanning multiple pages */
+        object-fit: contain;
+        margin: 0 auto;              /* Center images */
+    }
+
+    /* Adjust font size for printing */
+    body {
+        font-size: 12pt;             /* Adjust font size for printing */
+    }
+
+    /* Adjust pet profile details for printing */
+    .petCard h3, .petCard p {
+        font-size: 20pt;             /* Make profile details larger in print */
+    }
+
+    /* Ensure each card starts on a new page */
+    .petCard {
+        page-break-inside: avoid;    /* Prevent profile cards from splitting across pages */
+        page-break-after: always;    /* Ensure each card starts on a new page */
+        margin-bottom: 0;            /* Remove margin to avoid extra space */
+    }
+}
+
+/* Phone screen optimization */
+@media screen and (max-width: 600px) {
+    form {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .petCard {
+        padding: 10px;
+        margin: 5px;
+        width: calc(100% - 10px);
+    }
+
+    .petCard h3, .petCard p {
+        font-size: 16pt;             /* Smaller font size for smaller screens */
+    }
+
+    .petCard img {
+        max-width: 100%;             /* Ensure images fit within the screen width */
+        height: 70%;
+        max-height: 70vh;            /* Prevent images from overlapping pages */
+    }
+
+    .printBtn, .deleteBtn {
+        padding: 8px;                /* Smaller padding for buttons */
+    }
+
+    footer {
+        padding: 10px;
+        font-size: 14pt;             /* Smaller font size for footer */
+    }
+}
+
+/* Tablet screens */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+    .petCard img {
+        max-width: 180%;              /* Scale images to fit better */
+        max-height: 100vh;            /* Prevent images from spanning multiple pages */
+    }
+}
+
+/* Desktop screens */
+@media screen and (min-width: 1025px) {
+    .petCard {
+        padding: 15px;
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .petCard h3, .petCard p {
+        font-size: 18pt;             /* Adjust font size for larger screens */
+    }
+
+    .petCard img {
+        max-width: 120%;              /* Reduce image size slightly */
+        max-height: 90vh;            /* Prevent images from spanning multiple pages */
+        height: 90;
+    }
+
+    .printBtn, .deleteBtn {
+        padding: 10px;               /* Adjust padding for buttons */
+    }
+
+    footer {
+        padding: 15px;
+        font-size: 16pt;             /* Adjust font size for footer */
+    }
 }
