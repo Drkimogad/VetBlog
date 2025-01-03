@@ -6,9 +6,10 @@ let blogPosts = [
 ];
 
 // Current index for the blog posts
-// Set this to true for viewer mode, false for edit mode
 let currentPostIndex = 0;
-let readOnlyMode = false; // Read-only mode flag
+
+// Set this to true for viewer mode, false for edit mode
+let readOnlyMode = false;
 
 // Function to load the post based on the current index
 function loadPost(index) {
@@ -46,8 +47,19 @@ function loadPost(index) {
     });
 
     // Toggle read-only mode
+    postTitleElement.contentEditable = !readOnlyMode;
     postContentElement.readOnly = readOnlyMode;
     youtubeEmbedElement.readOnly = readOnlyMode;
+    photoUploadElement.style.display = readOnlyMode ? "none" : "block";
+
+    // Change the appearance of the content based on read-only mode
+    if (readOnlyMode) {
+      postContentElement.style.border = "none";
+      postContentElement.style.backgroundColor = "#f5f5f5";
+    } else {
+      postContentElement.style.border = "1px solid #ccc";
+      postContentElement.style.backgroundColor = "#fff";
+    }
 
   } else {
     if (errorMessageElement) {
@@ -59,18 +71,14 @@ function loadPost(index) {
 
 // Function to enable editing
 function enableEditing() {
-  const postTitleElement = document.getElementById("postTitle");
-  const postContentElement = document.getElementById("postContent");
-  postTitleElement.contentEditable = true;
-  postContentElement.readOnly = false;
-  postContentElement.style.border = "1px solid #ccc";
+  readOnlyMode = false;
+  loadPost(currentPostIndex);
 }
 
 // Function to save the edited post
 function savePost() {
   const postTitleElement = document.getElementById("postTitle");
   const postContentElement = document.getElementById("postContent");
-  const photoUploadElement = document.getElementById("photoUpload");
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
   const postImageElement = document.getElementById("postImage");
 
@@ -79,10 +87,6 @@ function savePost() {
   post.content = postContentElement.value;
   post.photo = postImageElement.src;
   post.youtube = youtubeEmbedElement.value;
-
-  postTitleElement.contentEditable = false;
-  postContentElement.readOnly = true;
-  postContentElement.style.border = "none";
 
   // Save the post to localStorage
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
@@ -109,9 +113,9 @@ function sharePost() {
   const post = blogPosts[currentPostIndex];
   const shareOptions = `
     <div>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(post.content)}" target="_blank">LinkedIn</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(post.content)}" target="_blank">Facebook</a>
-      <a href="https://wordpress.com/wp-admin/press-this.php?u=${encodeURIComponent(post.content)}" target="_blank">WordPress</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(post.content)}" target="_blank" class="share-button"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(post.content)}" target="_blank" class="share-button"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="https://wordpress.com/wp-admin/press-this.php?u=${encodeURIComponent(post.content)}" target="_blank" class="share-button"><i class="fab fa-wordpress"></i> WordPress</a>
     </div>
   `;
   document.getElementById("errorMessage").innerHTML = shareOptions;
@@ -125,8 +129,8 @@ function likePost() {
 
 // Function to toggle read-only mode
 function toggleReadOnlyMode() {
-  readOnlyMode = !readOnlyMode;
-  loadPost(currentPostIndex);
+  readOnlyMode = !readOnlyMode;  // Toggle the flag
+  loadPost(currentPostIndex);    // Reload the current post with the new mode
 }
 
 // Function to print the current post
