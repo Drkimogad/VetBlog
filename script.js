@@ -1,9 +1,13 @@
 // Example array of blog posts
-let blogPosts = [
-  { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
-  { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
-  { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
-];
+let blogPosts = new Array(50).fill(null).map((_, i) => ({
+  title: `Blog Post ${i + 1}`,
+  content: `This is the content of blog post ${i + 1}.`,
+  photo: "",
+  youtube: "",
+  isOwner: true,
+  likes: 0,
+  shares: 0
+}));
 
 // Current index for the blog posts
 let currentPostIndex = 0;
@@ -61,8 +65,9 @@ function loadPost(index) {
       postContentElement.style.backgroundColor = "#fff";
     }
 
-    // Hide toggle button in read-only mode
+    // Hide toggle button and owner buttons in read-only mode
     document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
+    document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
 
   } else {
     if (errorMessageElement) {
@@ -140,7 +145,14 @@ function toggleReadOnlyMode() {
 function printPost() {
   const postContainer = document.getElementById("postContainer");
   const originalContent = document.body.innerHTML;
-  const printContent = postContainer.innerHTML;
+  const printContent = `
+    <div>
+      <h2>${document.getElementById("postTitle").innerText}</h2>
+      <p>${document.getElementById("postContent").value}</p>
+      <img src="${document.getElementById("postImage").src}" style="max-width: 100%;" />
+      <p>${document.getElementById("youtubeEmbed").value}</p>
+    </div>
+  `;
 
   document.body.innerHTML = printContent;
   window.print();
