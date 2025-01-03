@@ -1,5 +1,5 @@
 // Example array of blog posts
-const blogPosts = [
+let blogPosts = [
   { title: "Blog Post 1", content: "This is the first blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
   { title: "Blog Post 2", content: "This is the second blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
   { title: "Blog Post 3", content: "This is the third blog post content.", photo: "", youtube: "", isOwner: true, likes: 0, shares: 0 },
@@ -27,7 +27,6 @@ function loadPost(index) {
     const post = blogPosts[index];
     postTitleElement.innerText = post.title;
     postContentElement.value = post.content;
-    photoUploadElement.value = post.photo;
     youtubeEmbedElement.value = post.youtube;
 
     // Display the uploaded image if it exists
@@ -72,7 +71,7 @@ function savePost() {
   const post = blogPosts[currentPostIndex];
   post.title = postTitleElement.innerText;
   post.content = postContentElement.value;
-  post.photo = photoUploadElement.value;
+  post.photo = postImageElement.src;
   post.youtube = youtubeEmbedElement.value;
 
   postTitleElement.contentEditable = false;
