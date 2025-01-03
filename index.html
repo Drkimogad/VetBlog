@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VetBlog</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <header>
@@ -15,7 +16,7 @@
   <section id="aboutUsSection">
     <h2>About Us</h2>
     <textarea id="aboutUsText" rows="5" cols="50">Write something about us...</textarea>
-    <button id="saveAboutUsButton">Save</button>
+    <button id="saveAboutUsButton" class="button">Save</button>
   </section>
 
   <main>
@@ -23,17 +24,18 @@
       <h2 id="postTitle">Blog Post Title</h2>
       <textarea id="postContent" rows="5" cols="50">This is the content of the blog post...</textarea>
       <input type="file" id="photoUpload" accept="image/*">
+      <img id="postImage" alt="Blog Post Image" style="display:none; max-width: 100%;">
       <input type="text" id="youtubeEmbed" placeholder="YouTube Embed URL">
       <div class="post-buttons">
-        <button id="editButton" class="owner-buttons">Edit</button>
-        <button id="deleteButton" class="owner-buttons">Delete</button>
-        <button id="publishButton" class="owner-buttons">Publish</button>
-        <button id="shareButton">Share</button>
-        <button id="likeButton">Like</button>
-        <button id="printButton">Print</button>
+        <button id="editButton" class="owner-buttons"><i class="fas fa-edit"></i> Edit</button>
+        <button id="deleteButton" class="owner-buttons"><i class="fas fa-trash"></i> Delete</button>
+        <button id="publishButton" class="owner-buttons"><i class="fas fa-save"></i> Publish</button>
+        <button id="shareButton"><i class="fas fa-share-alt"></i> Share</button>
+        <button id="likeButton"><i class="fas fa-thumbs-up"></i> Like</button>
+        <button id="printButton"><i class="fas fa-print"></i> Print</button>
       </div>
       <p id="errorMessage" style="color: red;"></p>
-      <button id="nextButton">Next Blog</button>
+      <button id="nextButton" class="button">Next Blog</button>
     </div>
   </main>
 
