@@ -25,7 +25,7 @@ function loadPost(index) {
   if (index >= 0 && index < blogPosts.length) {
     const post = blogPosts[index];
     postTitleElement.innerText = post.title;
-    postContentElement.innerText = post.content;
+    postContentElement.value = post.content;
     photoUploadElement.value = post.photo;
     youtubeEmbedElement.value = post.youtube;
   } else {
@@ -71,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("shareButton").addEventListener("click", function() {
     alert("Share functionality to be implemented.");
+  });
+
+  document.getElementById("likeButton").addEventListener("click", function() {
+    alert("Like functionality to be implemented.");
   });
 
   document.getElementById("printButton").addEventListener("click", function() {
