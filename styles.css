@@ -11,7 +11,7 @@ h1, h2 {
 }
 
 h1 {
-    color: #6a0dad;
+    color: #FFFFFF;
 }
 
 h2 {
@@ -196,4 +196,16 @@ footer {
         padding: 10px;
         font-size: 14pt;
     }
+}
+
+/* Header Styling */
+header {
+    background-color: #FF4500; /* Complementary color to green buttons */
+    padding: 10px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+#nextButton {
+    margin-bottom: 20px; /* Add space between next button and footer */
 }
