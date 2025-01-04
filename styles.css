@@ -11,7 +11,7 @@ h1, h2 {
 }
 
 h1 {
-    color: #FFFFFF;
+    color: #6a0dad;
 }
 
 h2 {
@@ -141,6 +141,28 @@ footer {
     width: 100%;
 }
 
+#nextButton {
+    margin-bottom: 60px; /* Increase space between next button and footer */
+}
+
+/* Share Buttons Styling */
+.share-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.share-button:hover {
+    background-color: #45a049;
+}
+
 /* Print styles - specifically for handling image scaling and visibility */
 @media print {
     /* Ensure images are visible and centered */
@@ -170,28 +192,15 @@ footer {
     }
 }
 
-/* Responsive Design */
-@media screen and (max-width: 600px) {
-    form {
-        margin: 10px;
-        padding: 15px;
-    }
+.postPreview {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+    background-color: #fff;
+    cursor: pointer;
+}
 
-    #postContainer {
-        margin: 10px;
-        padding: 15px;
-    }
-
-    .post-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .post-buttons button {
-        margin-bottom: 10px;
-        width: 80%;
-    }
-
-    footer {
-        padding: 10px;
-        font-size
+.postPreview:hover {
+    background-color: #f0f0f0;
+}
