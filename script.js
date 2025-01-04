@@ -1,21 +1,3 @@
-// Example array of blog posts
-let blogPosts = new Array(50).fill(null).map((_, i) => ({
-  id: i + 1,
-  title: `Blog Post ${i + 1}`,
-  content: `This is the content of blog post ${i + 1}.`,
-  photos: [],
-  youtube: "",
-  isOwner: true,
-  likes: 0,
-  shares: 0
-}));
-
-// Current index for the blog posts
-let currentPostIndex = 0;
-
-// Set this to true for viewer mode, false for edit mode
-let readOnlyMode = false;
-
 // Function to load the post based on the current index
 function loadPost(index) {
   const postTitleElement = document.getElementById("postTitle");
@@ -90,61 +72,26 @@ function loadPost(index) {
   }
 }
 
-// Function to enable editing
-function enableEditing() {
-  readOnlyMode = false;
-  loadPost(currentPostIndex);
-}
-
-// Function to save the edited post
-function savePost() {
-  const postTitleElement = document.getElementById("postTitle");
-  const postContentElement = document.getElementById("postContent");
-  const youtubeEmbedElement = document.getElementById("youtubeEmbed");
-
-  const post = blogPosts[currentPostIndex];
-  post.title = postTitleElement.innerText;
-  post.content = postContentElement.value;
-  post.youtube = youtubeEmbedElement.value;
-
-  // Save the post to localStorage
-  localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-
-  alert("Post saved!");
-}
-
-// Function to delete the current post
-function deletePost() {
-  blogPosts.splice(currentPostIndex, 1);
-  if (currentPostIndex >= blogPosts.length) {
-    currentPostIndex = 0;
-  }
-
-  // Save the updated posts to localStorage
-  localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-
-  loadPost(currentPostIndex);
-  alert("Post deleted!");
-}
-
-// Function to share the post
-function sharePost() {
-  const post = blogPosts[currentPostIndex];
-  const shareOptions = `
-    <div>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" class="share-button"><i class="fab fa-linkedin"></i> LinkedIn</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="share-button"><i class="fab fa-facebook"></i> Facebook</a>
-      <a href="https://wordpress.com/wp-admin/press-this.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="share-button"><i class="fab fa-wordpress"></i> WordPress</a>
-    </div>
+// Function to open a blog post in a new window
+function openPostInNewWindow(index) {
+  const post = blogPosts[index];
+  const postContent = `
+    <h1>${post.title}</h1>
+    <p>${post.content}</p>
+    ${post.photos.map(photo => `<img src="${photo}" style="max-width: 100%"/>`).join('')}
+    <p><a href="${post.youtube}" target="_blank">Watch on YouTube</a></p>
   `;
-  document.getElementById("errorMessage").innerHTML = shareOptions;
+  
+  const postWindow = window.open("", "PostWindow", "width=800,height=600");
+  postWindow.document.write(postContent);
 }
 
-// Function to like the post
-function likePost() {
-  blogPosts[currentPostIndex].likes += 1;
-  alert(`Post liked! Total likes: ${blogPosts[currentPostIndex].likes}`);
-}
+// Event listener for the "Next Blog" button
+document.getElementById("nextButton").addEventListener("click", function() {
+  // Move to the next post (loop back to the first post if at the end)
+  currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
+  loadPost(currentPostIndex);
+});
 
 // Function to toggle read-only mode
 function toggleReadOnlyMode() {
@@ -152,66 +99,28 @@ function toggleReadOnlyMode() {
   loadPost(currentPostIndex);    // Reload the current post with the new mode
 }
 
-// Function to print the current post
-function printPost() {
-  const printContent = `
-    <div>
-      ${document.getElementById("postTitle").outerHTML}
-      ${document.getElementById("postContent").outerHTML}
-      ${document.getElementById("postImagesContainer").outerHTML}
-      ${document.getElementById("youtubeEmbed").outerHTML}
-    </div>
-  `;
+// Function to load existing posts for viewers to click and open
+function loadPostsForViewers() {
+  const postsContainer = document.getElementById("postsContainer");
+  postsContainer.innerHTML = ''; // Clear the current content
 
-  const originalContent = document.body.innerHTML;
-  document.body.innerHTML = printContent;
-  window.print();
-  document.body.innerHTML = originalContent;
-  loadPost(currentPostIndex);
+  blogPosts.forEach((post, index) => {
+    const postElement = document.createElement("div");
+    postElement.classList.add("post-preview");
+    postElement.innerHTML = `
+      <h3 onclick="openPostInNewWindow(${index})">${post.title}</h3>
+      <p>${post.content.slice(0, 100)}...</p>
+    `;
+    postsContainer.appendChild(postElement);
+  });
 }
 
-// Function to open a blog post in the same page
-function openPost(index) {
-  document.getElementById("postContainer").style.display = "block";
-  loadPost(index);
-  currentPostIndex = index;
-}
-
-// Load the first post on initial page load
+// Function to initialize the page
 document.addEventListener("DOMContentLoaded", function() {
-  // Load blog posts from localStorage if available
-  const savedPosts = localStorage.getItem("blogPosts");
-  if (savedPosts) {
-    blogPosts = JSON.parse(savedPosts);
-  }
-
-  // Load the latest post initially
+  // Load the first post on initial page load
   loadPost(currentPostIndex);
 
-  // Load About Us content from localStorage
-  const savedAboutUsContent = localStorage.getItem("aboutUsContent");
-  if (savedAboutUsContent) {
-    document.getElementById("aboutUsText").value = savedAboutUsContent;
-  }
-
-  // Hide the post container initially
-  document.getElementById("postContainer").style.display = "block";
-
-  // Event listener for the "Next Blog" button
-  document.getElementById("nextButton").addEventListener("click", function() {
-    // Move to the next post (loop back to the first post if at the end)
-    currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
-    openPost(currentPostIndex);
-  });
-
-  // Event listener for the "Save" button in the About Us section
-  document.getElementById("saveAboutUsButton").addEventListener("click", function() {
-    const aboutUsContent = document.getElementById("aboutUsText").value;
-    localStorage.setItem("aboutUsContent", aboutUsContent);
-    alert("About Us content saved!");
-  });
-
-  // Event listeners for the blog post buttons
+  // Event listeners for blog post buttons
   document.getElementById("editButton").addEventListener("click", enableEditing);
   document.getElementById("deleteButton").addEventListener("click", deletePost);
   document.getElementById("publishButton").addEventListener("click", savePost);
@@ -236,4 +145,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Event listener for toggling read-only mode
   document.getElementById("toggleReadOnlyButton").addEventListener("click", toggleReadOnlyMode);
+
+  // Load posts for viewers
+  if (readOnlyMode) {
+    loadPostsForViewers();
+  }
 });
+
