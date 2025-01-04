@@ -1,4 +1,12 @@
-// Function to load the post based on the current index
+let blogPosts = [
+  // Example posts (some published, some not)
+  { title: "Post 1", content: "Content 1", youtube: "https://youtube.com", photos: [], isOwner: true, published: true },
+  { title: "Post 2", content: "Content 2", youtube: "https://youtube.com", photos: [], isOwner: false, published: false },
+];
+
+let currentPostIndex = 0;
+let readOnlyMode = true;
+
 function loadPost(index) {
   const postTitleElement = document.getElementById("postTitle");
   const postContentElement = document.getElementById("postContent");
@@ -6,20 +14,23 @@ function loadPost(index) {
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
   const errorMessageElement = document.getElementById("errorMessage");
   const postImagesContainer = document.getElementById("postImagesContainer");
+  const shareButtons = document.getElementById("shareButtons");
 
-  // Reset error message if any
   if (errorMessageElement) {
     errorMessageElement.textContent = "";
   }
 
-  // Validate the index
   if (index >= 0 && index < blogPosts.length) {
     const post = blogPosts[index];
+    if (readOnlyMode && !post.published) {
+      errorMessageElement.textContent = "This post is not published.";
+      return;
+    }
+
     postTitleElement.innerText = post.title;
     postContentElement.value = post.content;
     youtubeEmbedElement.value = post.youtube;
 
-    // Display uploaded images if they exist
     postImagesContainer.innerHTML = "";
     if (post.photos.length > 0) {
       post.photos.forEach(photo => {
@@ -30,35 +41,30 @@ function loadPost(index) {
       });
     }
 
-    // Show or hide owner buttons based on isOwner property
     const ownerButtons = document.querySelectorAll(".owner-buttons");
     ownerButtons.forEach(button => {
       button.style.display = readOnlyMode ? "none" : post.isOwner ? "inline-block" : "none";
     });
 
-    // Toggle read-only mode
     postTitleElement.contentEditable = !readOnlyMode;
     postContentElement.readOnly = readOnlyMode;
     youtubeEmbedElement.readOnly = readOnlyMode;
     photoUploadElement.style.display = readOnlyMode ? "none" : "block";
 
-    // Change the appearance of the content based on read-only mode
     if (readOnlyMode) {
       postContentElement.style.border = "none";
       postContentElement.style.backgroundColor = "#f5f5f5";
+      shareButtons.style.display = "block";
     } else {
       postContentElement.style.border = "1px solid #ccc";
       postContentElement.style.backgroundColor = "#fff";
+      shareButtons.style.display = "none";
     }
 
-    // Hide toggle button and owner buttons in read-only mode
     document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
     document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
-
-    // Ensure "Next Blog" button works in both modes
     document.getElementById("nextButton").style.display = "block";
 
-    // Ensure sharing, liking, and printing buttons are enabled in read-only mode
     const interactiveButtons = document.querySelectorAll("#shareButton, #likeButton, #printButton");
     interactiveButtons.forEach(button => {
       button.style.display = readOnlyMode ? "block" : "inline-block";
@@ -72,7 +78,6 @@ function loadPost(index) {
   }
 }
 
-// Function to open a blog post in a new window
 function openPostInNewWindow(index) {
   const post = blogPosts[index];
   const postContent = `
@@ -84,54 +89,47 @@ function openPostInNewWindow(index) {
   
   const postWindow = window.open("", "PostWindow", "width=800,height=600");
   postWindow.document.write(postContent);
-
-  // Add print functionality to the new window
   postWindow.document.write('<button onclick="window.print()">Print</button>');
 }
 
-// Event listener for the "Next Blog" button
 document.getElementById("nextButton").addEventListener("click", function() {
-  // Move to the next post (loop back to the first post if at the end)
   currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
   loadPost(currentPostIndex);
 });
 
-// Function to toggle read-only mode
+document.getElementById("toggleReadOnlyButton").addEventListener("click", toggleReadOnlyMode);
+
 function toggleReadOnlyMode() {
-  readOnlyMode = !readOnlyMode;  // Toggle the flag
-  loadPost(currentPostIndex);    // Reload the current post with the new mode
+  readOnlyMode = !readOnlyMode;
+  loadPost(currentPostIndex);
 }
 
-// Function to load existing posts for viewers to click and open
 function loadPostsForViewers() {
   const postsContainer = document.getElementById("postsContainer");
-  postsContainer.innerHTML = ''; // Clear the current content
+  postsContainer.innerHTML = '';
 
   blogPosts.forEach((post, index) => {
-    const postElement = document.createElement("div");
-    postElement.classList.add("post-preview");
-    postElement.innerHTML = `
-      <h3 onclick="openPostInNewWindow(${index})">${post.title}</h3>
-      <p>${post.content.slice(0, 100)}...</p>
-    `;
-    postsContainer.appendChild(postElement);
+    if (post.published || !readOnlyMode) {
+      const postElement = document.createElement("div");
+      postElement.classList.add("post-preview");
+      postElement.innerHTML = `
+        <h3 onclick="openPostInNewWindow(${index})">${post.title}</h3>
+        <p>${post.content.slice(0, 100)}...</p>
+      `;
+      postsContainer.appendChild(postElement);
+    }
   });
 }
 
-// Function to initialize the page
 document.addEventListener("DOMContentLoaded", function() {
-  // Load the first post on initial page load
   loadPost(currentPostIndex);
 
-  // Event listeners for blog post buttons
   document.getElementById("editButton").addEventListener("click", enableEditing);
   document.getElementById("deleteButton").addEventListener("click", deletePost);
   document.getElementById("publishButton").addEventListener("click", savePost);
-  document.getElementById("shareButton").addEventListener("click", sharePost);
   document.getElementById("likeButton").addEventListener("click", likePost);
   document.getElementById("printButton").addEventListener("click", printPost);
 
-  // Event listener for photo upload
   document.getElementById("photoUpload").addEventListener("change", function(event) {
     const files = event.target.files;
     const post = blogPosts[currentPostIndex];
@@ -146,37 +144,39 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Event listener for toggling read-only mode
-  document.getElementById("toggleReadOnlyButton").addEventListener("click", toggleReadOnlyMode);
+  document.getElementById("shareButton").addEventListener("click", sharePost);
 
-  // Load posts for viewers
   if (readOnlyMode) {
     loadPostsForViewers();
   }
 });
 
-// Function to share the post
-function sharePost() {
+function sharePost(event) {
   const post = blogPosts[currentPostIndex];
   const postUrl = encodeURIComponent(window.location.href);
   const postTitle = encodeURIComponent(post.title);
   const postContent = encodeURIComponent(post.content);
+  const target = event.target;
 
-  const fbUrl = `https://www.facebook.com/sharer.php?u=${postUrl}`;
-  const wpUrl = `https://wordpress.com/post?title=${postTitle}&content=${postContent}`;
-  const liUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`;
+  let shareUrl = '';
 
-  window.open(fbUrl, '_blank');
-  window.open(wpUrl, '_blank');
-  window.open(liUrl, '_blank');
+  if (target.title === "Share on Facebook") {
+    shareUrl = `https://www.facebook.com/sharer.php?u=${postUrl}`;
+  } else if (target.title === "Share on WordPress") {
+    shareUrl = `https://wordpress.com/post?title=${postTitle}&content=${postContent}`;
+  } else if (target.title === "Share on LinkedIn") {
+    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`;
+  }
+
+  if (shareUrl) {
+    window.open(shareUrl, '_blank');
+  }
 }
 
-// Function to like the post
 function likePost() {
   alert('Post liked!');
 }
 
-// Function to print the post
 function printPost() {
   openPostInNewWindow(currentPostIndex);
 }
