@@ -207,7 +207,7 @@ header {
 }
 
 #nextButton {
-    margin-bottom: 20px; /* Add space between next button and footer */
+    margin-bottom: 60px; /* Increase space between next button and footer */
 }
 
 /* Share Buttons Styling */
