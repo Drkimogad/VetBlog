@@ -150,6 +150,29 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+function enableEditing() {
+  readOnlyMode = false;
+  loadPost(currentPostIndex);
+}
+
+function deletePost() {
+  if (confirm("Are you sure you want to delete this post?")) {
+    blogPosts.splice(currentPostIndex, 1);
+    currentPostIndex = 0; // Reset to the first post or handle accordingly
+    loadPost(currentPostIndex);
+  }
+}
+
+function savePost() {
+  const post = blogPosts[currentPostIndex];
+  post.title = document.getElementById("postTitle").innerText;
+  post.content = document.getElementById("postContent").value;
+  post.youtube = document.getElementById("youtubeEmbed").value;
+
+  // Save the post to the server or local storage if needed
+  alert("Post saved successfully!");
+}
+
 function sharePost(event) {
   const post = blogPosts[currentPostIndex];
   const postUrl = encodeURIComponent(window.location.href);
