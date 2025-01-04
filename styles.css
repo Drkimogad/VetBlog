@@ -88,7 +88,7 @@ textarea {
 }
 
 #saveAboutUsButton {
-    background-color: #FFDB58; /* Green */
+    background-color: #4CAF50; /* Green */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -98,7 +98,7 @@ textarea {
 }
 
 #saveAboutUsButton:hover {
-    background-color: #FFDB58;
+    background-color: #45a049;
 }
 
 /* Blog Post Container */
@@ -119,7 +119,7 @@ textarea {
 }
 
 button {
-    background-color: #FFDB58; /* Green */
+    background-color: #4CAF50; /* Green */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -128,7 +128,7 @@ button {
 }
 
 button:hover {
-    background-color: #FFDB58;
+    background-color: #45a049;
 }
 
 footer {
@@ -150,7 +150,7 @@ footer {
     display: inline-block;
     margin: 5px;
     padding: 10px 20px;
-    background-color: #FFDB58; /* Green */
+    background-color: #4CAF50; /* Green */
     color: white;
     border: none;
     border-radius: 5px;
@@ -160,7 +160,7 @@ footer {
 }
 
 .share-button:hover {
-    background-color: #FFDB58;
+    background-color: #45a049;
 }
 
 /* Print styles - specifically for handling image scaling and visibility */
