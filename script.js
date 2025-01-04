@@ -55,8 +55,8 @@ function loadPost(index) {
     document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
     document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
 
-    // Ensure "Next Blog" button works in read-only mode
-    document.getElementById("nextButton").style.display = readOnlyMode ? "block" : "none";
+    // Ensure "Next Blog" button works in both modes
+    document.getElementById("nextButton").style.display = "block";
 
     // Ensure sharing, liking, and printing buttons are enabled in read-only mode
     const interactiveButtons = document.querySelectorAll("#shareButton, #likeButton, #printButton");
@@ -84,6 +84,9 @@ function openPostInNewWindow(index) {
   
   const postWindow = window.open("", "PostWindow", "width=800,height=600");
   postWindow.document.write(postContent);
+
+  // Add print functionality to the new window
+  postWindow.document.write('<button onclick="window.print()">Print</button>');
 }
 
 // Event listener for the "Next Blog" button
@@ -152,3 +155,28 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+// Function to share the post
+function sharePost() {
+  const post = blogPosts[currentPostIndex];
+  const postUrl = encodeURIComponent(window.location.href);
+  const postTitle = encodeURIComponent(post.title);
+  const postContent = encodeURIComponent(post.content);
+
+  const fbUrl = `https://www.facebook.com/sharer.php?u=${postUrl}`;
+  const wpUrl = `https://wordpress.com/post?title=${postTitle}&content=${postContent}`;
+  const liUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`;
+
+  window.open(fbUrl, '_blank');
+  window.open(wpUrl, '_blank');
+  window.open(liUrl, '_blank');
+}
+
+// Function to like the post
+function likePost() {
+  alert('Post liked!');
+}
+
+// Function to print the post
+function printPost() {
+  openPostInNewWindow(currentPostIndex);
+}
