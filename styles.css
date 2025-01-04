@@ -143,6 +143,11 @@ footer {
 
 #nextButton {
     margin-bottom: 60px;
+    background-color: #ffa500; /* Ensured visibility */
+}
+
+#nextButton:hover {
+    background-color: #e69500; /* Hover effect for next button */
 }
 
 /* Share Buttons Styling */
@@ -205,4 +210,32 @@ footer {
 
 .postPreview:hover {
     background-color: #f0f0f0;
+}
+
+/* Edit Mode Enhancements */
+#postContainer.edit-mode .postPreview {
+    display: block;
+}
+
+#postContainer.edit-mode .postPreview:not(:first-child) {
+    visibility: hidden;
+}
+
+/* Styling for post headers in edit mode (Clickable posts) */
+.postPreview a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.postPreview a:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+/* Ensure posts are displayed in edit mode and are clickable */
+#postContainer .postPreview:not(.hidden) {
+    display: block;
 }
