@@ -1,8 +1,9 @@
 // Example array of blog posts
 let blogPosts = new Array(50).fill(null).map((_, i) => ({
+  id: i + 1,
   title: `Blog Post ${i + 1}`,
   content: `This is the content of blog post ${i + 1}.`,
-  photo: "",
+  photos: [],
   youtube: "",
   isOwner: true,
   likes: 0,
@@ -22,7 +23,7 @@ function loadPost(index) {
   const photoUploadElement = document.getElementById("photoUpload");
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
   const errorMessageElement = document.getElementById("errorMessage");
-  const postImageElement = document.getElementById("postImage");
+  const postImagesContainer = document.getElementById("postImagesContainer");
 
   // Reset error message if any
   if (errorMessageElement) {
@@ -36,12 +37,15 @@ function loadPost(index) {
     postContentElement.value = post.content;
     youtubeEmbedElement.value = post.youtube;
 
-    // Display the uploaded image if it exists
-    if (post.photo) {
-      postImageElement.src = post.photo;
-      postImageElement.style.display = "block";
-    } else {
-      postImageElement.style.display = "none";
+    // Display uploaded images if they exist
+    postImagesContainer.innerHTML = "";
+    if (post.photos.length > 0) {
+      post.photos.forEach(photo => {
+        const imgElement = document.createElement("img");
+        imgElement.src = photo;
+        imgElement.style.maxWidth = "100%";
+        postImagesContainer.appendChild(imgElement);
+      });
     }
 
     // Show or hide owner buttons based on isOwner property
@@ -69,6 +73,15 @@ function loadPost(index) {
     document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
     document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
 
+    // Ensure "Next Blog" button works in read-only mode
+    document.getElementById("nextButton").style.display = readOnlyMode ? "block" : "none";
+
+    // Ensure sharing, liking, and printing buttons are enabled in read-only mode
+    const interactiveButtons = document.querySelectorAll("#shareButton, #likeButton, #printButton");
+    interactiveButtons.forEach(button => {
+      button.style.display = readOnlyMode ? "block" : "inline-block";
+    });
+
   } else {
     if (errorMessageElement) {
       errorMessageElement.textContent = "Error: Invalid blog post.";
@@ -88,12 +101,10 @@ function savePost() {
   const postTitleElement = document.getElementById("postTitle");
   const postContentElement = document.getElementById("postContent");
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
-  const postImageElement = document.getElementById("postImage");
 
   const post = blogPosts[currentPostIndex];
   post.title = postTitleElement.innerText;
   post.content = postContentElement.value;
-  post.photo = postImageElement.src;
   post.youtube = youtubeEmbedElement.value;
 
   // Save the post to localStorage
@@ -121,9 +132,9 @@ function sharePost() {
   const post = blogPosts[currentPostIndex];
   const shareOptions = `
     <div>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(post.content)}" target="_blank" class="share-button"><i class="fab fa-linkedin"></i> LinkedIn</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(post.content)}" target="_blank" class="share-button"><i class="fab fa-facebook"></i> Facebook</a>
-      <a href="https://wordpress.com/wp-admin/press-this.php?u=${encodeURIComponent(post.content)}" target="_blank" class="share-button"><i class="fab fa-wordpress"></i> WordPress</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" class="share-button"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="share-button"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="https://wordpress.com/wp-admin/press-this.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="share-button"><i class="fab fa-wordpress"></i> WordPress</a>
     </div>
   `;
   document.getElementById("errorMessage").innerHTML = shareOptions;
@@ -147,10 +158,10 @@ function printPost() {
   const originalContent = document.body.innerHTML;
   const printContent = `
     <div>
-      <h2>${document.getElementById("postTitle").innerText}</h2>
-      <p>${document.getElementById("postContent").value}</p>
-      <img src="${document.getElementById("postImage").src}" style="max-width: 100%;" />
-      <p>${document.getElementById("youtubeEmbed").value}</p>
+      ${document.getElementById("postTitle").outerHTML}
+      ${document.getElementById("postContent").outerHTML}
+      ${document.getElementById("postImagesContainer").outerHTML}
+      ${document.getElementById("youtubeEmbed").outerHTML}
     </div>
   `;
 
@@ -200,16 +211,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Event listener for photo upload
   document.getElementById("photoUpload").addEventListener("change", function(event) {
-    const file = event.target.files[0];
-    if (file) {
+    const files = event.target.files;
+    const post = blogPosts[currentPostIndex];
+
+    for (const file of files) {
       const reader = new FileReader();
       reader.onload = function(e) {
-        const postImageElement = document.getElementById("postImage");
-        postImageElement.src = e.target.result;
-        postImageElement.style.display = "block";
-
-        // Save the image data to the current post
-        blogPosts[currentPostIndex].photo = e.target.result;
+        post.photos.push(e.target.result);
+        loadPost(currentPostIndex);
       };
       reader.readAsDataURL(file);
     }
