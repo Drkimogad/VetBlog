@@ -1,7 +1,7 @@
 let blogPosts = [
-  // Example posts (some published, some not)
   { title: "Post 1", content: "Content 1", youtube: "https://youtube.com", photos: [], isOwner: true, published: true },
   { title: "Post 2", content: "Content 2", youtube: "https://youtube.com", photos: [], isOwner: false, published: false },
+  // Add more posts as needed
 ];
 
 let currentPostIndex = 0;
@@ -14,7 +14,6 @@ function loadPost(index) {
   const youtubeEmbedElement = document.getElementById("youtubeEmbed");
   const errorMessageElement = document.getElementById("errorMessage");
   const postImagesContainer = document.getElementById("postImagesContainer");
-  const shareButtons = document.getElementById("shareButtons");
 
   if (errorMessageElement) {
     errorMessageElement.textContent = "";
@@ -54,18 +53,16 @@ function loadPost(index) {
     if (readOnlyMode) {
       postContentElement.style.border = "none";
       postContentElement.style.backgroundColor = "#f5f5f5";
-      shareButtons.style.display = "block";
     } else {
       postContentElement.style.border = "1px solid #ccc";
       postContentElement.style.backgroundColor = "#fff";
-      shareButtons.style.display = "none";
     }
 
     document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
     document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
     document.getElementById("nextButton").style.display = "block";
 
-    const interactiveButtons = document.querySelectorAll("#shareButton, #likeButton, #printButton");
+    const interactiveButtons = document.querySelectorAll("#likeButton, #printButton");
     interactiveButtons.forEach(button => {
       button.style.display = readOnlyMode ? "block" : "inline-block";
     });
@@ -144,7 +141,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  document.getElementById("shareButton").addEventListener("click", sharePost);
+  document.querySelectorAll(".share-button").forEach(button => {
+    button.addEventListener("click", sharePost);
+  });
 
   if (readOnlyMode) {
     loadPostsForViewers();
