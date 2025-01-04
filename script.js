@@ -16,6 +16,22 @@ let currentPostIndex = 0;
 // Set this to true for viewer mode, false for edit mode
 let readOnlyMode = false;
 
+// Function to load all posts in the opening view
+function loadAllPosts() {
+  const postsContainer = document.getElementById("postsContainer");
+  postsContainer.innerHTML = ""; // Clear previous posts
+
+  blogPosts.forEach((post, index) => {
+    const postElement = document.createElement("div");
+    postElement.className = "postPreview";
+    postElement.innerHTML = `
+      <h3 onclick="openPost(${index})">${post.title}</h3>
+      <p>${post.content.substring(0, 100)}...</p>
+    `;
+    postsContainer.appendChild(postElement);
+  });
+}
+
 // Function to load the post based on the current index
 function loadPost(index) {
   const postTitleElement = document.getElementById("postTitle");
@@ -171,34 +187,6 @@ function printPost() {
   loadPost(currentPostIndex);
 }
 
-// Function to load all published posts as snippets
-function loadAllPosts() {
-  const allPostsContainer = document.getElementById("allPostsContainer");
-  allPostsContainer.innerHTML = "";
-
-  blogPosts.forEach((post, index) => {
-    const postSnippet = document.createElement("div");
-    postSnippet.className = "post-snippet";
-    postSnippet.innerHTML = `
-      <h3 class="post-title" onclick="openPost(${index})">${post.title}</h3>
-      <p>${post.content.substring(0, 100)}...</p>
-    `;
-    allPostsContainer.appendChild(postSnippet);
-  });
-}
-
-// Function to open a post beside the existing content
-function openPost(index) {
-  currentPostIndex = index;
-  const postContentClone = document.getElementById("postContainer").cloneNode(true);
-  const newPostContainer = document.createElement("div");
-  newPostContainer.style.border = "1px solid #ccc";
-  newPostContainer.style.marginTop = "20px";
-  newPostContainer.innerHTML = postContentClone.innerHTML;
-  document.querySelector("main").appendChild(newPostContainer);
-  loadPost(index);
-}
-
 // Load the first post on initial page load
 document.addEventListener("DOMContentLoaded", function() {
   // Load blog posts from localStorage if available
@@ -207,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function() {
     blogPosts = JSON.parse(savedPosts);
   }
 
-  loadPost(currentPostIndex);
   loadAllPosts();
 
   // Load About Us content from localStorage
@@ -220,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("nextButton").addEventListener("click", function() {
     // Move to the next post (loop back to the first post if at the end)
     currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
-    openPost(currentPostIndex);
+    appendNewPost(currentPostIndex);
   });
 
   // Event listener for the "Save" button in the About Us section
