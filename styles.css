@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5; /* Light grey background */
+    background-color: #f5f5f5;
 }
 
 h1, h2 {
@@ -11,11 +11,11 @@ h1, h2 {
 }
 
 h1 {
-    color: #6a0dad; /* Purple (kept as is) */
+    color: #6a0dad;
 }
 
 h2 {
-    color: #ffa500; /* Mustard for subheadings */
+    color: #007bff;
 }
 
 form {
@@ -46,7 +46,7 @@ textarea {
 }
 
 .button {
-    background-color: #ffa500; /* Mustard */
+    background-color: #ffa500;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -88,7 +88,7 @@ textarea {
 }
 
 #saveAboutUsButton {
-    background-color: #333333; /* Charcoal */
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -98,7 +98,7 @@ textarea {
 }
 
 #saveAboutUsButton:hover {
-    background-color: #555555;
+    background-color: #45a049;
 }
 
 /* Blog Post Container */
@@ -119,7 +119,7 @@ textarea {
 }
 
 button {
-    background-color: #333333; /* Charcoal */
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -128,11 +128,11 @@ button {
 }
 
 button:hover {
-    background-color: #555555;
+    background-color: #45a049;
 }
 
 footer {
-    background-color: #333333; /* Charcoal */
+    background-color: #333;
     color: white;
     text-align: center;
     padding: 20px;
@@ -150,7 +150,7 @@ footer {
     display: inline-block;
     margin: 5px;
     padding: 10px 20px;
-    background-color: #ffa500; /* Mustard */
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
@@ -160,11 +160,12 @@ footer {
 }
 
 .share-button:hover {
-    background-color: #e69500;
+    background-color: #45a049;
 }
 
 /* Print styles */
 @media print {
+    /* Ensure images are visible and centered */
     img {
         width: 100%;
         height: auto;
@@ -181,6 +182,11 @@ footer {
         font-size: 20pt;
     }
 
+    /* Ensure only relevant content is printed */
+    #nextButton, .post-buttons, footer {
+        display: none;
+    }
+
     section {
         page-break-inside: avoid;
         page-break-after: always;
@@ -188,7 +194,7 @@ footer {
     }
 }
 
-.postPreview {   
+.postPreview {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
