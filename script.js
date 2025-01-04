@@ -170,7 +170,6 @@ function toggleReadOnlyMode() {
 
 // Function to print the current post
 function printPost() {
-  const postContainer = document.getElementById("postContainer");
   const originalContent = document.body.innerHTML;
   const printContent = `
     <div>
@@ -185,6 +184,13 @@ function printPost() {
   window.print();
   document.body.innerHTML = originalContent;
   loadPost(currentPostIndex);
+}
+
+// Function to open a blog post in the same page
+function openPost(index) {
+  document.getElementById("postContainer").style.display = "block";
+  loadPost(index);
+  currentPostIndex = index;
 }
 
 // Load the first post on initial page load
@@ -203,11 +209,14 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("aboutUsText").value = savedAboutUsContent;
   }
 
+  // Hide the post container initially
+  document.getElementById("postContainer").style.display = "none";
+
   // Event listener for the "Next Blog" button
   document.getElementById("nextButton").addEventListener("click", function() {
     // Move to the next post (loop back to the first post if at the end)
     currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
-    appendNewPost(currentPostIndex);
+    openPost(currentPostIndex);
   });
 
   // Event listener for the "Save" button in the About Us section
