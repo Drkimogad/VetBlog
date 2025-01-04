@@ -194,36 +194,4 @@ footer {
 
     footer {
         padding: 10px;
-        font-size: 14pt;
-    }
-}
-
-/* Header Styling */
-header {
-    background-color: #FF4500; /* Complementary color to green buttons */
-    padding: 10px;
-    text-align: center;
-    color: #FFFFFF;
-}
-
-#nextButton {
-    margin-bottom: 60px; /* Increase space between next button and footer */
-}
-
-/* Share Buttons Styling */
-.share-button {
-    display: inline-block;
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Green */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.share-button:hover {
-    background-color: #45a049;
-}
+        font-size
