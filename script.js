@@ -1,73 +1,59 @@
-// General DOM Selectors
-document.addEventListener("DOMContentLoaded", () => {
-    const aboutUsText = document.querySelector("#aboutUsText");
-    const saveAboutUsButton = document.querySelector("#saveAboutUsButton");
-    const postContainer = document.querySelector("#postContainer");
-    const nextButton = document.querySelector("#nextButton");
-
-    // About Us Save Button Logic
-    if (saveAboutUsButton) {
-        saveAboutUsButton.addEventListener("click", () => {
-            const textContent = aboutUsText.value.trim();
-            if (textContent) {
-                alert("About Us section saved successfully!");
-            } else {
-                alert("Please fill out the About Us section before saving.");
-            }
+document.addEventListener('DOMContentLoaded', () => {
+    const postContainer = document.getElementById('postContainer');
+    const postForm = document.getElementById('postForm');
+    const titleInput = document.getElementById('titleInput');
+    const contentInput = document.getElementById('contentInput');
+    const nextButton = document.getElementById('nextButton');
+    const postsList = document.getElementById('postsList');
+    
+    // Function to create a new post
+    const createPost = (title, content) => {
+        const postElement = document.createElement('div');
+        postElement.classList.add('postPreview');
+        postElement.innerHTML = `
+            <h3>${title}</h3>
+            <p>${content}</p>
+            <div class="post-buttons">
+                <button class="printButton">Print</button>
+                <button class="editButton">Edit</button>
+            </div>
+        `;
+        
+        // Add functionality for print button
+        const printButton = postElement.querySelector('.printButton');
+        printButton.addEventListener('click', () => {
+            window.print();
         });
-    }
 
-    // Adding Interactivity for Post Previews
-    const postPreviews = document.querySelectorAll(".postPreview");
-    if (postPreviews) {
-        postPreviews.forEach((post) => {
-            post.addEventListener("click", () => {
-                alert(`You clicked on: ${post.textContent}`);
-            });
+        // Add functionality for edit button
+        const editButton = postElement.querySelector('.editButton');
+        editButton.addEventListener('click', () => {
+            titleInput.value = title;
+            contentInput.value = content;
+            postContainer.classList.add('hidden');
+            nextButton.classList.remove('hidden');
         });
-    }
 
-    // Next Button Logic
-    if (nextButton) {
-        nextButton.addEventListener("click", () => {
-            alert("Loading the next content...");
-        });
-    }
-});
+        // Append the new post to the list of posts
+        postsList.appendChild(postElement);
+    };
 
-// Share Buttons Logic
-const shareButtons = document.querySelectorAll(".share-button");
-shareButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        alert("Share functionality coming soon!");
+    // Handle form submission to create a new post
+    postForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const title = titleInput.value;
+        const content = contentInput.value;
+        
+        if (title && content) {
+            createPost(title, content);
+            titleInput.value = '';
+            contentInput.value = '';
+        }
+    });
+
+    // Handle the "Next Blog" button functionality
+    nextButton.addEventListener('click', () => {
+        postContainer.classList.remove('hidden');
+        nextButton.classList.add('hidden');
     });
 });
-
-// Print Preview Logic
-const printButtons = document.querySelectorAll(".print-button");
-printButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        window.print();
-    });
-});
-
-// Blog Post Button Logic
-const postButtons = document.querySelectorAll(".post-buttons button");
-postButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        alert(`${button.textContent} functionality is under development!`);
-    });
-});
-
-// Dynamic Theme Styling
-const applyTheme = () => {
-    const root = document.documentElement;
-
-    // Setting theme colors
-    root.style.setProperty("--primary-color", "#ffdd00"); // Mustard
-    root.style.setProperty("--secondary-color", "#2e2e2e"); // Charcoal
-    root.style.setProperty("--background-color", "#ffffff"); // White
-};
-
-// Apply theme on load
-applyTheme();
