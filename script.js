@@ -16,22 +16,6 @@ let currentPostIndex = 0;
 // Set this to true for viewer mode, false for edit mode
 let readOnlyMode = false;
 
-// Function to load all posts in the opening view
-function loadAllPosts() {
-  const postsContainer = document.getElementById("postsContainer");
-  postsContainer.innerHTML = ""; // Clear previous posts
-
-  blogPosts.forEach((post, index) => {
-    const postElement = document.createElement("div");
-    postElement.className = "postPreview";
-    postElement.innerHTML = `
-      <h3 onclick="openPost(${index})">${post.title}</h3>
-      <p>${post.content.substring(0, 100)}...</p>
-    `;
-    postsContainer.appendChild(postElement);
-  });
-}
-
 // Function to load the post based on the current index
 function loadPost(index) {
   const postTitleElement = document.getElementById("postTitle");
@@ -170,7 +154,6 @@ function toggleReadOnlyMode() {
 
 // Function to print the current post
 function printPost() {
-  const originalContent = document.body.innerHTML;
   const printContent = `
     <div>
       ${document.getElementById("postTitle").outerHTML}
@@ -180,6 +163,7 @@ function printPost() {
     </div>
   `;
 
+  const originalContent = document.body.innerHTML;
   document.body.innerHTML = printContent;
   window.print();
   document.body.innerHTML = originalContent;
@@ -201,7 +185,8 @@ document.addEventListener("DOMContentLoaded", function() {
     blogPosts = JSON.parse(savedPosts);
   }
 
-  loadAllPosts();
+  // Load the latest post initially
+  loadPost(currentPostIndex);
 
   // Load About Us content from localStorage
   const savedAboutUsContent = localStorage.getItem("aboutUsContent");
@@ -210,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Hide the post container initially
-  document.getElementById("postContainer").style.display = "none";
+  document.getElementById("postContainer").style.display = "block";
 
   // Event listener for the "Next Blog" button
   document.getElementById("nextButton").addEventListener("click", function() {
