@@ -215,4 +215,15 @@ function printPost() {
 
 // Add save button for About Us
 document.getElementById("saveAboutUsButton").addEventListener("click", function() {
-  const aboutUsContent = document.getElement
+  const aboutUsContent = document.getElementById("aboutUsContent").value;
+  localStorage.setItem('aboutUsContent', aboutUsContent);
+  alert("About Us content saved successfully!");
+});
+
+// Load About Us content from local storage
+document.addEventListener("DOMContentLoaded", function() {
+  const aboutUsContent = localStorage.getItem('aboutUsContent');
+  if (aboutUsContent) {
+    document.getElementById("aboutUsContent").value = aboutUsContent;
+  }
+});
