@@ -85,7 +85,7 @@ function openPostInNewWindow(index) {
     ${post.photos.map(photo => `<img src="${photo}" style="max-width: 100%"/>`).join('')}
     <p><a href="${post.youtube}" target="_blank">Watch on YouTube</a></p>
   `;
-  
+
   const postWindow = window.open("", "PostWindow", "width=800,height=600");
   postWindow.document.write(postContent);
   postWindow.document.write('<button onclick="window.print()">Print</button>');
@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("publishButton").addEventListener("click", () => publishPost(currentPostIndex));
   document.getElementById("likeButton").addEventListener("click", likePost);
   document.getElementById("printButton").addEventListener("click", printPost);
+  document.getElementById("saveButton").addEventListener("click", savePost);
 
   document.getElementById("photoUpload").addEventListener("change", function(event) {
     const files = event.target.files;
