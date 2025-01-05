@@ -1,12 +1,13 @@
+// Load the blog posts from local storage or initialize with default posts
 let blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [
   { title: "Post 1", content: "Content 1", youtube: "https://youtube.com", photos: [], isOwner: true, published: true },
-  { title: "Post 2", content: "Content 2", youtube: "https://youtube.com", photos: [], isOwner: false, published: false },
-  // Add more posts as needed
+  { title: "Post 2", content: "Content 2", youtube: "https://youtube.com", photos: [], isOwner: false, published: false }
 ];
 
 let currentPostIndex = 0;
 let readOnlyMode = true;
 
+// Load the post content based on the current index
 function loadPost(index) {
   const postTitleElement = document.getElementById("postTitle");
   const postContentElement = document.getElementById("postContent");
@@ -50,6 +51,7 @@ function loadPost(index) {
     youtubeEmbedElement.readOnly = readOnlyMode;
     photoUploadElement.style.display = readOnlyMode ? "none" : "block";
 
+    // Adjust styling based on read-only mode
     if (readOnlyMode) {
       postContentElement.style.border = "none";
       postContentElement.style.backgroundColor = "#f5f5f5";
@@ -58,7 +60,7 @@ function loadPost(index) {
       postContentElement.style.backgroundColor = "#fff";
     }
 
-    document.getElementById("toggleReadOnlyButton").style.display = readOnlyMode ? "none" : "block";
+    document.getElementById("toggleReadOnlyButton").style.display = "block";
     document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
     document.getElementById("nextButton").style.display = "block";
 
@@ -74,6 +76,7 @@ function loadPost(index) {
   }
 }
 
+// Open the post in a new window for printing
 function openPostInNewWindow(index) {
   const post = blogPosts[index];
   const postContent = `
@@ -88,18 +91,22 @@ function openPostInNewWindow(index) {
   postWindow.document.write('<button onclick="window.print()">Print</button>');
 }
 
+// Event listener for the Next Blog button
 document.getElementById("nextButton").addEventListener("click", function() {
   currentPostIndex = (currentPostIndex + 1) % blogPosts.length;
   loadPost(currentPostIndex);
 });
 
+// Event listener for the Toggle Read-Only Mode button
 document.getElementById("toggleReadOnlyButton").addEventListener("click", toggleReadOnlyMode);
 
+// Toggle read-only mode
 function toggleReadOnlyMode() {
   readOnlyMode = !readOnlyMode;
   loadPost(currentPostIndex);
 }
 
+// Load posts for viewers
 function loadPostsForViewers() {
   const postsContainer = document.getElementById("postsContainer");
   postsContainer.innerHTML = '';
@@ -119,6 +126,7 @@ function loadPostsForViewers() {
   });
 }
 
+// Event listeners for buttons and file upload
 document.addEventListener("DOMContentLoaded", function() {
   loadPost(currentPostIndex);
 
@@ -151,11 +159,13 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+// Enable editing mode
 function enableEditing() {
   readOnlyMode = false;
   loadPost(currentPostIndex);
 }
 
+// Delete a post
 function deletePost(index) {
   if (confirm("Are you sure you want to delete this post?")) {
     blogPosts.splice(index, 1);
@@ -166,6 +176,7 @@ function deletePost(index) {
   }
 }
 
+// Publish a post
 function publishPost(index) {
   blogPosts[index].published = true;
   localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
@@ -173,16 +184,18 @@ function publishPost(index) {
   loadPostsForViewers();
 }
 
+// Save the current post
 function savePost() {
   const post = blogPosts[currentPostIndex];
   post.title = document.getElementById("postTitle").innerText;
   post.content = document.getElementById("postContent").value;
   post.youtube = document.getElementById("youtubeEmbed").value;
 
-  localStorage.setItem('blogPosts', JSON.stringify(blogPosts)); // Example of saving to local storage
+  localStorage.setItem('blogPosts', JSON.stringify(blogPosts)); // Save to local storage
   alert("Post saved successfully!");
 }
 
+// Share the current post
 function sharePost(event) {
   const post = blogPosts[currentPostIndex];
   const postUrl = encodeURIComponent(window.location.href);
@@ -205,15 +218,17 @@ function sharePost(event) {
   }
 }
 
+// Like the current post
 function likePost() {
   alert('Post liked!');
 }
 
+// Print the current post
 function printPost() {
   openPostInNewWindow(currentPostIndex);
 }
 
-// Add save button for About Us
+// Save the About Us content
 document.getElementById("saveAboutUsButton").addEventListener("click", function() {
   const aboutUsContent = document.getElementById("aboutUsContent").value;
   localStorage.setItem('aboutUsContent', aboutUsContent);
