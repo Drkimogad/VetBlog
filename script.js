@@ -170,6 +170,7 @@ function savePost() {
   post.youtube = document.getElementById("youtubeEmbed").value;
 
   // Save the post to the server or local storage if needed
+  localStorage.setItem('blogPosts', JSON.stringify(blogPosts)); // Example of saving to local storage
   alert("Post saved successfully!");
 }
 
