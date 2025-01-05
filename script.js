@@ -9,6 +9,17 @@ let readOnlyMode = true;
 
 // Load the post content based on the current index
 function loadPost(index) {
+  if (index < 0 || index >= blogPosts.length) {
+    const errorMessageElement = document.getElementById("errorMessage");
+    if (errorMessageElement) {
+      errorMessageElement.textContent = "Error: Invalid blog post.";
+    }
+    console.error("Invalid index:", index);
+    return;
+  }
+
+  const post = blogPosts[index];
+
   const postTitleElement = document.getElementById("postTitle");
   const postContentElement = document.getElementById("postContent");
   const photoUploadElement = document.getElementById("photoUpload");
@@ -20,60 +31,52 @@ function loadPost(index) {
     errorMessageElement.textContent = "";
   }
 
-  if (index >= 0 && index < blogPosts.length) {
-    const post = blogPosts[index];
-    if (readOnlyMode && !post.published) {
-      errorMessageElement.textContent = "This post is not published.";
-      return;
-    }
-
-    postTitleElement.innerText = post.title;
-    postContentElement.value = post.content;
-    youtubeEmbedElement.value = post.youtube;
-
-    postImagesContainer.innerHTML = "";
-    if (post.photos.length > 0) {
-      post.photos.forEach(photo => {
-        const imgElement = document.createElement("img");
-        imgElement.src = photo;
-        imgElement.style.maxWidth = "100%";
-        postImagesContainer.appendChild(imgElement);
-      });
-    }
-
-    const ownerButtons = document.querySelectorAll(".owner-buttons");
-    ownerButtons.forEach(button => {
-      button.style.display = readOnlyMode ? "none" : post.isOwner ? "inline-block" : "none";
-    });
-
-    postTitleElement.contentEditable = !readOnlyMode;
-    postContentElement.readOnly = readOnlyMode;
-    youtubeEmbedElement.readOnly = readOnlyMode;
-    photoUploadElement.style.display = readOnlyMode ? "none" : "block";
-
-    // Adjust styling based on read-only mode
-    if (readOnlyMode) {
-      postContentElement.style.border = "none";
-      postContentElement.style.backgroundColor = "#f5f5f5";
-    } else {
-      postContentElement.style.border = "1px solid #ccc";
-      postContentElement.style.backgroundColor = "#fff";
-    }
-
-    document.getElementById("toggleReadOnlyButton").style.display = "block";
-    document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
-    document.getElementById("nextButton").style.display = "block";
-
-    const interactiveButtons = document.querySelectorAll("#likeButton, #printButton");
-    interactiveButtons.forEach(button => {
-      button.style.display = readOnlyMode ? "block" : "inline-block";
-    });
-  } else {
-    if (errorMessageElement) {
-      errorMessageElement.textContent = "Error: Invalid blog post.";
-    }
-    console.error("Invalid index:", index);
+  if (readOnlyMode && !post.published) {
+    errorMessageElement.textContent = "This post is not published.";
+    return;
   }
+
+  postTitleElement.innerText = post.title;
+  postContentElement.value = post.content;
+  youtubeEmbedElement.value = post.youtube;
+
+  postImagesContainer.innerHTML = "";
+  if (post.photos.length > 0) {
+    post.photos.forEach(photo => {
+      const imgElement = document.createElement("img");
+      imgElement.src = photo;
+      imgElement.style.maxWidth = "100%";
+      postImagesContainer.appendChild(imgElement);
+    });
+  }
+
+  const ownerButtons = document.querySelectorAll(".owner-buttons");
+  ownerButtons.forEach(button => {
+    button.style.display = readOnlyMode ? "none" : post.isOwner ? "inline-block" : "none";
+  });
+
+  postTitleElement.contentEditable = !readOnlyMode;
+  postContentElement.readOnly = readOnlyMode;
+  youtubeEmbedElement.readOnly = readOnlyMode;
+  photoUploadElement.style.display = readOnlyMode ? "none" : "block";
+
+  // Adjust styling based on read-only mode
+  if (readOnlyMode) {
+    postContentElement.style.border = "none";
+    postContentElement.style.backgroundColor = "#f5f5f5";
+  } else {
+    postContentElement.style.border = "1px solid #ccc";
+    postContentElement.style.backgroundColor = "#fff";
+  }
+
+  document.getElementById("toggleReadOnlyButton").style.display = "block";
+  document.getElementById("saveAboutUsButton").style.display = readOnlyMode ? "none" : "block";
+  document.getElementById("nextButton").style.display = "block";
+
+  const interactiveButtons = document.querySelectorAll("#likeButton, #printButton");
+  interactiveButtons.forEach(button => {
+    button.style.display = readOnlyMode ? "block" : "inline-block";
+  });
 }
 
 // Open the post in a new window for printing
@@ -85,7 +88,7 @@ function openPostInNewWindow(index) {
     ${post.photos.map(photo => `<img src="${photo}" style="max-width: 100%"/>`).join('')}
     <p><a href="${post.youtube}" target="_blank">Watch on YouTube</a></p>
   `;
-
+  
   const postWindow = window.open("", "PostWindow", "width=800,height=600");
   postWindow.document.write(postContent);
   postWindow.document.write('<button onclick="window.print()">Print</button>');
@@ -135,7 +138,11 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("publishButton").addEventListener("click", () => publishPost(currentPostIndex));
   document.getElementById("likeButton").addEventListener("click", likePost);
   document.getElementById("printButton").addEventListener("click", printPost);
-  document.getElementById("saveButton").addEventListener("click", savePost);
+
+  const saveButton = document.getElementById("saveButton");
+  if (saveButton) {
+    saveButton.addEventListener("click", savePost);
+  }
 
   document.getElementById("photoUpload").addEventListener("change", function(event) {
     const files = event.target.files;
