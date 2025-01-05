@@ -1,4 +1,4 @@
-let blogPosts = [
+let blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [
   { title: "Post 1", content: "Content 1", youtube: "https://youtube.com", photos: [], isOwner: true, published: true },
   { title: "Post 2", content: "Content 2", youtube: "https://youtube.com", photos: [], isOwner: false, published: false },
   // Add more posts as needed
@@ -66,7 +66,6 @@ function loadPost(index) {
     interactiveButtons.forEach(button => {
       button.style.display = readOnlyMode ? "block" : "inline-block";
     });
-
   } else {
     if (errorMessageElement) {
       errorMessageElement.textContent = "Error: Invalid blog post.";
@@ -112,6 +111,8 @@ function loadPostsForViewers() {
       postElement.innerHTML = `
         <h3 onclick="openPostInNewWindow(${index})">${post.title}</h3>
         <p>${post.content.slice(0, 100)}...</p>
+        <button class="owner-buttons" onclick="deletePost(${index})" style="display: ${readOnlyMode ? 'none' : 'inline-block'};">Delete</button>
+        <button class="owner-buttons" onclick="publishPost(${index})" style="display: ${readOnlyMode ? 'none' : 'inline-block'};">Publish</button>
       `;
       postsContainer.appendChild(postElement);
     }
@@ -122,8 +123,8 @@ document.addEventListener("DOMContentLoaded", function() {
   loadPost(currentPostIndex);
 
   document.getElementById("editButton").addEventListener("click", enableEditing);
-  document.getElementById("deleteButton").addEventListener("click", deletePost);
-  document.getElementById("publishButton").addEventListener("click", savePost);
+  document.getElementById("deleteButton").addEventListener("click", () => deletePost(currentPostIndex));
+  document.getElementById("publishButton").addEventListener("click", () => publishPost(currentPostIndex));
   document.getElementById("likeButton").addEventListener("click", likePost);
   document.getElementById("printButton").addEventListener("click", printPost);
 
@@ -155,12 +156,21 @@ function enableEditing() {
   loadPost(currentPostIndex);
 }
 
-function deletePost() {
+function deletePost(index) {
   if (confirm("Are you sure you want to delete this post?")) {
-    blogPosts.splice(currentPostIndex, 1);
+    blogPosts.splice(index, 1);
+    localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
     currentPostIndex = 0; // Reset to the first post or handle accordingly
     loadPost(currentPostIndex);
+    loadPostsForViewers();
   }
+}
+
+function publishPost(index) {
+  blogPosts[index].published = true;
+  localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+  loadPost(index);
+  loadPostsForViewers();
 }
 
 function savePost() {
@@ -169,7 +179,6 @@ function savePost() {
   post.content = document.getElementById("postContent").value;
   post.youtube = document.getElementById("youtubeEmbed").value;
 
-  // Save the post to the server or local storage if needed
   localStorage.setItem('blogPosts', JSON.stringify(blogPosts)); // Example of saving to local storage
   alert("Post saved successfully!");
 }
@@ -203,3 +212,18 @@ function likePost() {
 function printPost() {
   openPostInNewWindow(currentPostIndex);
 }
+
+// Add save button for About Us
+document.getElementById("saveAboutUsButton").addEventListener("click", function() {
+  const aboutUsContent = document.getElementById("aboutUsContent").value;
+  localStorage.setItem('aboutUsContent', aboutUsContent);
+  alert("About Us content saved successfully!");
+});
+
+// Load About Us content from local storage
+document.addEventListener("DOMContentLoaded", function() {
+  const aboutUsContent = localStorage.getItem('aboutUsContent');
+  if (aboutUsContent) {
+    document.getElementById("aboutUsContent").value = aboutUsContent;
+  }
+});
