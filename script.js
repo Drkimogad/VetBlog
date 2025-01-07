@@ -1,7 +1,9 @@
+// Updated Script
+
 // Load the blog posts from local storage or initialize with default posts
 let blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [
   { title: "Post 1", content: "Content 1", youtube: "https://youtube.com", photos: [], isOwner: true, published: true },
-  { title: "Post 2", content: "Content 2", youtube: "https://youtube.com", photos: [], isOwner: false, published: false }
+  { title: "Post 2", content: "Content 2", youtube: "", photos: [], isOwner: false, published: false }
 ];
 
 let currentPostIndex = 0;
@@ -82,11 +84,12 @@ function loadPost(index) {
 // Open the post in a new window for printing
 function openPostInNewWindow(index) {
   const post = blogPosts[index];
+  const youtubeLink = post.youtube ? `<p><a href="${post.youtube}" target="_blank">Watch on YouTube</a></p>` : '';
   const postContent = `
     <h1>${post.title}</h1>
     <p>${post.content}</p>
     ${post.photos.map(photo => `<img src="${photo}" style="max-width: 100%"/>`).join('')}
-    <p><a href="${post.youtube}" target="_blank">Watch on YouTube</a></p>
+    ${youtubeLink}
   `;
   
   const postWindow = window.open("", "PostWindow", "width=800,height=600");
@@ -118,9 +121,11 @@ function loadPostsForViewers() {
     if (post.published || !readOnlyMode) {
       const postElement = document.createElement("div");
       postElement.classList.add("post-preview");
+      const youtubeLink = post.youtube ? `<p><a href="${post.youtube}" target="_blank">Watch on YouTube</a></p>` : '';
       postElement.innerHTML = `
         <h3 onclick="openPostInNewWindow(${index})">${post.title}</h3>
         <p>${post.content.slice(0, 100)}...</p>
+        ${youtubeLink}
         <button class="owner-buttons" onclick="deletePost(${index})" style="display: ${readOnlyMode ? 'none' : 'inline-block'};">Delete</button>
         <button class="owner-buttons" onclick="publishPost(${index})" style="display: ${readOnlyMode ? 'none' : 'inline-block'};">Publish</button>
       `;
