@@ -14,7 +14,7 @@ function loadPost(index) {
   if (index < 0 || index >= blogPosts.length) {
     const errorMessageElement = document.getElementById("errorMessage");
     if (errorMessageElement) {
-      errorMessageElement.textContent = "Error: Invalid blog post.";
+      errorMessageElement.textContent = "";
     }
     console.error("Invalid index:", index);
     return;
@@ -221,7 +221,7 @@ function sharePost(event) {
   if (target.title === "Share on Facebook") {
     shareUrl = `https://www.facebook.com/sharer.php?u=${postUrl}`;
   } else if (target.title === "Share on WordPress") {
-    shareUrl = `https://wordpress.com/post?title=${postTitle}&content=${postContent}`;
+    shareUrl = `https://public-api.wordpress.com/wp/v2/sites/YOUR_SITE/posts/new?title=${postTitle}&content=${postContent}`;
   } else if (target.title === "Share on LinkedIn") {
     shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`;
   }
